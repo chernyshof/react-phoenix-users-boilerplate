@@ -11,16 +11,22 @@ defmodule Boilerplate.Web.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+  end
+
+  scope "/api", Boilerplate.Web do
+    pipe_through :api
+
+    post "/sessions", SessionController, :create
+    delete "/sessions", SessionController, :delete
+    post "/sessions/refresh", SessionController, :refresh
+    resources "/users", UserController, only: [:create]
   end
 
   scope "/", Boilerplate.Web do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Boilerplate.Web do
-  #   pipe_through :api
-  # end
 end

@@ -36,7 +36,7 @@ defmodule Boilerplate.Web.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_boilerplate_key",
-    signing_salt: "H2EsN1G5"
+    signing_salt: "nVEPJkWP"
 
   plug Boilerplate.Web.Router
 

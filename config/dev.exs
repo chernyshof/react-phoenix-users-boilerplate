@@ -11,7 +11,7 @@ config :boilerplate, Boilerplate.Web.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: []
+  watchers: [npm: ["run", "start", cd: Path.expand("../assets", __DIR__)]]
 
 # ## SSL Support
 #
@@ -55,3 +55,8 @@ config :boilerplate, Boilerplate.Repo,
   database: "boilerplate_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure Guardian secret_key
+config :guardian, Guardian,
+  secret_key: "pSvhS9/LBddw5CwJGT74UYoyXQSA49kR55IllTzUJHhUMX8pXBYBjsnSzR7W7rrP"
+
