@@ -1,8 +1,8 @@
-# Elm + Phoenix boilerplate
+# React + Phoenix boilerplate
 
 __NOTE:__ This represents Phoenix 1.3. It is finalised but has not been officially released yet. More information [here](https://gist.github.com/chrismccord/71ab10d433c98b714b75c886eff17357).
 
-This is a setup for an Elm + Phoenix project, using webpack 2 for bundling and simple users with authentication.
+This is a setup for an React + Phoenix project, using webpack 2 for bundling and simple users with authentication.
 
 This is supposed to be something like starter point not production boilerplate.
 
