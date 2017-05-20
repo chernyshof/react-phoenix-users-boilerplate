@@ -11,7 +11,8 @@ config :boilerplate, Boilerplate.Web.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [npm: ["run", "start", cd: Path.expand("../assets", __DIR__)]]
+  watchers: [npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]]
+  # watchers: [npm: ["run", "start", cd: Path.expand("../assets", __DIR__)]]
 
 # ## SSL Support
 #

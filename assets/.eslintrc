@@ -1,5 +1,6 @@
 {
   "parser": "babel-eslint",
+  "plugins": ["react", "flowtype", "import"],
   "env": {
     "browser": true,
     "node": true,
@@ -10,12 +11,19 @@
     "es6": true,
     "classes": true
   },
-  "extends": "airbnb",
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
   "rules": {
     "space-before-function-paren": 0,
     "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": 0,
-    "global-require": 0
+    "global-require": 0,
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+        }
+      }
+    }
   }
-}

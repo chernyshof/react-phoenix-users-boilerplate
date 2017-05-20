@@ -16,6 +16,13 @@ const config = {
     './assets/scss/main.scss',
   ],
 
+  resolve: {
+    alias: {
+      components: resolve(__dirname, 'app/components/index.js'),
+    },
+  },
+
+
   output: {
     filename: 'js/app.js',
     path: resolve(__dirname, '../priv/static'),

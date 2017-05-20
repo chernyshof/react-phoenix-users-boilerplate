@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import App from '../components/App';
+import { Route, Switch } from 'react-router';
+import { ConnectedRouter as Router } from 'react-router-redux';
+import PropTypes from 'prop-types';
+
+
+import { App, NotFound } from 'components';
+
 
 export default class Root extends Component {
   render() {
     return (
-      <Router>
-        <Route path="/" component={App} />
+      <Router history={this.props.history}>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="*" component={NotFound} />
+        </Switch>
       </Router>
     );
   }
 }
 
+
+Root.propTypes = {
+  history: PropTypes.object.isRequired,  // eslint-disable-line react/forbid-prop-types
+};

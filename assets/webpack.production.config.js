@@ -17,7 +17,7 @@ const config = {
   output: {
     filename: 'js/app.js',
     path: resolve(__dirname, '../priv/static'),
-    publicPath: '',
+    publicPath: '/',
   },
 
   plugins: [
