@@ -15,7 +15,21 @@
   },
   "author": "Dmitriy Chernyshov <dmitriy.chernyshof@gmail.com>",
   "license": "MIT",
+  "jest": {
+    "modulePaths": ["app"],
+    "moduleDirectories": ["node_modules"],
+    "moduleNameMapper": {
+      "^@components$": "<rootDir>/app/components/index.js",
+      "^@reducers$": "<rootDir>/app/reducers",
+      "^@actions$": "<rootDir>/app/actions",
+      "^@config$": "<rootDir>/app/config",
+      "^@store$": "<rootDir>/app/store",
+      "^@utils$": "<rootDir>/app/utils",
+      "^@sagas$": "<rootDir>/app/sagas"
+    }
+  },
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-polyfill": "^6.23.0",
     "cross-env": "5.0.0",
     "history": "^4.6.1",
@@ -30,7 +44,7 @@
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "4.1.1",
-    "react-router-redux": "5",
+    "react-router-redux": "5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",
     "redux-logger": "^3.0.6",

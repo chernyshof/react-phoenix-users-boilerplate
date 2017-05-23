@@ -12,4 +12,8 @@ defmodule Boilerplate.Web.SessionView do
   def render("delete.json", _) do
     %{ok: true}
   end
+
+  def render("no_session.json", _) do
+    %{errors: "invalid or expired session token"}
+  end
 end

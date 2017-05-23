@@ -5,11 +5,15 @@ import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { browserHistory } from 'react-router';
 
-import configureStore from './store';
-import Root from './config/Root';
+import configureStore, { sagaMiddleware } from 'store';
+import Root from 'config/Root';
+import Sagas from 'sagas';
 
 
 const store = configureStore(browserHistory);
+
+sagaMiddleware.run(Sagas);
+
 const history = createHistory();
 
 const render = (Component) => {

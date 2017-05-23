@@ -1,16 +1,18 @@
 import 'babel-polyfill';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
-import sagaMiddleware from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'react-router-redux';
 
 
-import reducers from '../reducers';
+import reducers from 'reducers';
 
 const loggerMiddleware = createLogger({
   level: 'info',
   collapsed: true,
 });
+
+export const sagaMiddleware = createSagaMiddleware();
 
 /* eslint-disable no-underscore-dangle */
 export default function configureStore(browserHistory) {

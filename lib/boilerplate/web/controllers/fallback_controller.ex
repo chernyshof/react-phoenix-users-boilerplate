@@ -23,4 +23,10 @@ defmodule Boilerplate.Web.FallbackController do
     |> put_status(:unprocessable_entity)
     |> render(Boilerplate.Web.ChangesetView, "wrong_credentials.json") 
   end
+
+  def call(conn, {:error, :no_session}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(Boilerplate.Web.SessionView, "no_session.json")
+  end
 end
