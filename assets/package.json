@@ -16,8 +16,12 @@
   "author": "Dmitriy Chernyshov <dmitriy.chernyshof@gmail.com>",
   "license": "MIT",
   "jest": {
-    "modulePaths": ["app"],
-    "moduleDirectories": ["node_modules"],
+    "modulePaths": [
+      "app"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
     "moduleNameMapper": {
       "^@components$": "<rootDir>/app/components/index.js",
       "^@reducers$": "<rootDir>/app/reducers",
@@ -31,8 +35,11 @@
   "dependencies": {
     "axios": "^0.16.1",
     "babel-polyfill": "^6.23.0",
+    "bootstrap": "4.0.0-alpha.6",
     "cross-env": "5.0.0",
+    "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
     "moment": "^2.18.1",

@@ -1,3 +1,4 @@
+
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 // import { push } from 'react-router-redux';
@@ -17,18 +18,15 @@ function login(data) {
   return api.post('/sessions', data);
 }
 
-function* callLogin({ data, resolve, reject }) {
+function* callLogin({ data }) {
   const result = yield call(login, data);
 
-  if (result.data) {
+  if (result.data.data) {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
     yield put(reset('signup'));
-    // yield put(push('/'));
-    yield call(resolve);
   } else {
     localStorage.removeItem('token');
-    yield call(reject);
   }
 }
 
@@ -42,18 +40,16 @@ function signup(data) {
   return api.post('/users', data);
 }
 
-function* callSignup({ data, resolve, reject }) {
+function* callSignup({ data }) {
   const result = yield call(signup, data);
   if (result.data) {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
     yield put(reset('signup'));
     // yield put(push('/'));
-    yield call(resolve);
   } else {
     localStorage.removeItem('token');
     // yield put(push('/login'));
-    yield call(reject);
   }
 }
 
@@ -70,6 +66,7 @@ function logout() {
 
 function* callLogout() {
   yield call(logout);
+  yield call(localStorage.removeItem('token'));
 }
 
 function* logoutSaga() {
@@ -84,15 +81,12 @@ function authenticate() {
 
 function* callAuthenticate() {
   const result = yield call(authenticate);
-  if (result.data.data && !result.data.errors) {
+  if (result.data.data) {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
-    // yield put(push('/'));
   } else {
-    // console.log(result.data.errors);
     localStorage.removeItem('token');
     window.location = '/login';
-    // yield put(push('/login'));
   }
 }
 

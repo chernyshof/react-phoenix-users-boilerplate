@@ -9,11 +9,14 @@ const config = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8081',
-    'webpack/hot/only-dev-server',
+    // 'react-hot-loader/patch',
+    'webpack-dev-server/client?http://http://127.0.0.0:9000',
+    // 'webpack/hot/only-dev-server',
     './main.js',
     './assets/scss/main.scss',
+    'jquery/dist/jquery.js',
+    'tether/dist/js/tether.js',
+    'bootstrap/dist/js/bootstrap.js',
   ],
 
   resolve: {
@@ -38,8 +41,8 @@ const config = {
   context: resolve(__dirname, 'app'),
 
   devServer: {
-    hot: true,
-    contentBase: resolve(__dirname, 'dist'),
+    hot: false,
+    contentBase: resolve(__dirname, '../priv/static'),
     publicPath: '/',
   },
 
@@ -68,19 +71,27 @@ const config = {
           ],
         }),
       },
+      { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg)$/, use: 'url-loader?limit=15000' },
-      { test: /\.eot(\?v=\d+.\d+.\d+)?$/, use: 'file-loader' },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff' },
-      { test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+      { test: /\.svg$/, loader: 'url-loader?limit=65000&mimetype=image/svg+xml&name=fonts/[name].[ext]' },
+      { test: /\.woff$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff&name=fonts/[name].[ext]' },
+      { test: /\.woff2$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff2&name=fonts/[name].[ext]' },
+      { test: /\.[ot]tf$/, loader: 'url-loader?limit=65000&mimetype=application/octet-stream&name=fonts/[name].[ext]' },
+      { test: /\.eot$/, loader: 'url-loader?limit=65000&mimetype=application/vnd.ms-fontobject&name=fonts/[name].[ext]' },
     ],
   },
 
   plugins: [
-    new ExtractTextPlugin({ filename: 'style.css', disable: false, allChunks: true }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Tether: 'tether',
+    }),
+    new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    new OpenBrowserPlugin({ url: 'http://localhost:8081' }),
-    new webpack.HotModuleReplacementPlugin(),
+    // new OpenBrowserPlugin({ url: 'http://localhost:9000' }),
+    // new webpack.HotModuleReplacementPlugin(),
   ],
 };
 

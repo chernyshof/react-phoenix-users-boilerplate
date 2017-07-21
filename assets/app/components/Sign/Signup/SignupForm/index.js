@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -7,18 +7,13 @@ import { FormInput } from 'components';
 import { signup } from 'actions/session';
 
 class SignupForm extends Component {
-  submit = (data, dispatch) => (
-    new Promise((resolve, reject) => {
-      dispatch(signup(data, resolve, reject));
-    }).catch((error) => {
-      throw new SubmissionError(error);
-    }))
+  submit = (data, dispatch) => dispatch(signup(data));
 
   render() {
     const { handleSubmit, submitting } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.submit)}>
+      <form className="form-signup card" onSubmit={handleSubmit(this.submit)}>
         <h3>Create an account</h3>
         <Field
           name="username"
@@ -44,12 +39,12 @@ class SignupForm extends Component {
         <button
           type="submit"
           disabled={submitting}
-          className="btn"
+          className="btn btn-primary btn-lg btn-block"
         >
           {submitting ? 'Submitting...' : 'Sign up'}
         </button>
         <hr />
-        <Link to="/Login" className="btn">
+        <Link to="/login" className="btn">
           Login to your account
         </Link>
       </form>

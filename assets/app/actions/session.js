@@ -7,18 +7,8 @@ export const types = {
   AUTHENTICATION_FAILURE: 'SESSION/AUTHENTICATION_FAILURE',
 };
 
-export const login = (data, resolve, reject) => ({
-  type: types.LOGIN_REQUEST,
-  data,
-  resolve,
-  reject,
-});
-export const signup = (data, resolve, reject) => ({
-  type: types.SIGNUP_REQUEST,
-  data,
-  resolve,
-  reject,
-});
+export const login = data => ({ type: types.LOGIN_REQUEST, data });
+export const signup = data => ({ type: types.SIGNUP_REQUEST, data });
 export const logout = () => ({ type: types.LOGOUT });
 export const authenticate = () => ({ type: types.AUTHENTICATION_REQUEST });
 export const unauthenticate = () => ({ type: types.AUTHENTICATION_FAILURE });

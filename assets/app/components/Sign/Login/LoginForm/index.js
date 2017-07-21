@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -7,25 +7,30 @@ import { FormInput } from 'components';
 import { login } from 'actions/session';
 
 class LoginForm extends Component {
-  submit = (data, dispatch) => (
-    new Promise((resolve, reject) => {
-      dispatch(login(data, resolve, reject));
-    }).catch((error) => {
-      throw new SubmissionError(error);
-    }))
+  submit = (data, dispatch) => dispatch(login(data));
 
   render() {
     const { handleSubmit, submitting } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.submit)}>
+      <form className="form-login card" onSubmit={handleSubmit(this.submit)}>
         <h3>Login to Sling</h3>
-        <Field name="email" type="text" component={FormInput} placeholder="Email" />
-        <Field name="password" type="password" component={FormInput} placeholder="Password" />
+        <Field
+          name="email"
+          type="email"
+          component={FormInput}
+          placeholder="Email"
+        />
+        <Field
+          name="password"
+          type="password"
+          component={FormInput}
+          placeholder="Password"
+        />
         <button
           type="submit"
           disabled={submitting}
-          className="btn"
+          className="btn btn-primary btn-lg btn-block"
         >
           {submitting ? 'Logging in...' : 'Login'}
         </button>

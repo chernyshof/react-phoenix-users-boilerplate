@@ -7,7 +7,9 @@ export default class Signup extends Component {
   render() {
     return (
       <div className="signup">
-        <SignupForm onSubmit={this.handleSignup} />
+        <div className="container">
+          <SignupForm onSubmit={this.handleSignup} />
+        </div>
       </div>
     );
   }

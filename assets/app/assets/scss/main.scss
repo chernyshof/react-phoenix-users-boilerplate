@@ -1,5 +1,8 @@
-$color: #262823;
+@import 'variables.scss';
+@import 'sign.scss';
 
-body {
-  color: $color;
+
+body, html, #root {
+  height: 100%;
+  width: 100%;
 }
