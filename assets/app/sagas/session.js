@@ -66,7 +66,7 @@ function logout() {
 
 function* callLogout() {
   yield call(logout);
-  yield call(localStorage.removeItem('token'));
+  localStorage.removeItem('token');
 }
 
 function* logoutSaga() {

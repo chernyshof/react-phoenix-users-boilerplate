@@ -7,7 +7,7 @@
     <meta name="description" content="chat">
     <meta name="author" content="Dmitriy Chernyshov">
 
-    <title>Hello Sling!</title>
+    <title>Hello Boilerplate!</title>
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/style.css") %>">
   </head>
