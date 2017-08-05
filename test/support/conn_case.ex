@@ -1,4 +1,4 @@
-defmodule Boilerplate.Web.ConnCase do
+defmodule BoilerplateWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,10 +19,10 @@ defmodule Boilerplate.Web.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import Boilerplate.Web.Router.Helpers
+      import BoilerplateWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Boilerplate.Web.Endpoint
+      @endpoint BoilerplateWeb.Endpoint
     end
   end
 

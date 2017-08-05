@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :boilerplate, Boilerplate.Web.Endpoint,
+config :boilerplate, BoilerplateWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -31,13 +31,13 @@ config :boilerplate, Boilerplate.Web.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :boilerplate, Boilerplate.Web.Endpoint,
+config :boilerplate, BoilerplateWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{lib/boilerplate/web/views/.*(ex)$},
-      ~r{lib/boilerplate/web/templates/.*(eex)$}
+      ~r{lib/boilerplate_web/views/.*(ex)$},
+      ~r{lib/boilerplate_web/templates/.*(eex)$}
     ]
   ]
 
@@ -57,7 +57,6 @@ config :boilerplate, Boilerplate.Repo,
   hostname: "localhost",
   pool_size: 10
 
-# Configure Guardian secret_key
+# Configure Guardian secret key
 config :guardian, Guardian,
-  secret_key: "pSvhS9/LBddw5CwJGT74UYoyXQSA49kR55IllTzUJHhUMX8pXBYBjsnSzR7W7rrP"
-
+  secret_key: "OSMuzr1uWJthItzsyXItnRoM3MLNaZXUwkamEHTwxUBYPPDuQTLPJnMBMiMATRjF"

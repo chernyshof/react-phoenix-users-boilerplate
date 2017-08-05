@@ -1,6 +1,6 @@
 defmodule Boilerplate.Accounts do
   @moduledoc """
-  The boundary for the Accounts system.
+  The Accounts context.
   """
 
   import Ecto.{Query, Changeset}, warn: false
@@ -42,16 +42,16 @@ defmodule Boilerplate.Accounts do
 
   ## Examples
 
-      iex> create_user(user, %{field: value})
+      iex> create_user(%{field: value})
       {:ok, %User{}}
 
-      iex> create_user(user, %{field: bad_value})
+      iex> create_user(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
   def create_user(attrs \\ %{}) do
     %User{}
-    |> registration_user_changeset(attrs)
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -69,7 +69,7 @@ defmodule Boilerplate.Accounts do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> user_changeset(attrs)
+    |> User.changeset(attrs)
     |> Repo.update()
   end
 
@@ -99,7 +99,7 @@ defmodule Boilerplate.Accounts do
 
   """
   def change_user(%User{} = user) do
-    user_changeset(user, %{})
+    User.changeset(user, %{})
   end
 
   def get_current_token(conn) do
@@ -128,7 +128,7 @@ defmodule Boilerplate.Accounts do
 
   def authenticate(%{"email" => email, "password" => password}) do
     user = Repo.get_by(Boilerplate.Accounts.User, email: String.downcase(email))
-    
+
     case check_password(user, password) do
       true -> {:ok, user}
       _ -> {:error, :wrong_credentials}
@@ -139,32 +139,6 @@ defmodule Boilerplate.Accounts do
     case user do
       nil -> Comeonin.Bcrypt.dummy_checkpw()
       _ -> Comeonin.Bcrypt.checkpw(password, user.password_hash)
-    end
-  end
-
-  defp user_changeset(%User{} = user, attrs) do
-    user
-    |> cast(attrs, [:username, :email])
-    |> validate_required([:username, :email])
-    |> validate_length(:username, min: 1, max: 20)
-    |> unique_constraint(:username)
-    |> unique_constraint(:email)
-  end
-
-  defp registration_user_changeset(%User{} = user, attrs) do
-    user
-    |> user_changeset(attrs)
-    |> cast(attrs, [:password])
-    |> validate_length(:password, min: 6, max: 100)
-    |> put_password_hash_user()
-  end
-
-  defp put_password_hash_user (changeset) do
-    case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
-      _ ->
-        changeset
     end
   end
 end

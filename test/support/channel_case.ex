@@ -1,4 +1,4 @@
-defmodule Boilerplate.Web.ChannelCase do
+defmodule BoilerplateWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,7 +21,7 @@ defmodule Boilerplate.Web.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint Boilerplate.Web.Endpoint
+      @endpoint BoilerplateWeb.Endpoint
     end
   end
 

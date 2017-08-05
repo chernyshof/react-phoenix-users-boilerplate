@@ -10,10 +10,10 @@ config :boilerplate,
   ecto_repos: [Boilerplate.Repo]
 
 # Configures the endpoint
-config :boilerplate, Boilerplate.Web.Endpoint,
+config :boilerplate, BoilerplateWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "OBdEolnShHTCHgXNoGiRXrfefvVfGtce5YBg5JNscY3axGiLgXUIhyRuQ0HV3Tnf",
-  render_errors: [view: Boilerplate.Web.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "H5AcfaG9fEz2gjjKEBJ3PNT7peIPEo270GOHwgataQEsfdx8Ujsi3aDlxel77eQH",
+  render_errors: [view: BoilerplateWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Boilerplate.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -22,9 +22,9 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Configure Guardian
+# Configures Guardian
 config :guardian, Guardian,
-  issuer: "Boilerplate",
+  issuer: "Sling",
   ttl: {30, :days},
   verify_issuer: true,
   serializer: Boilerplate.GuardianSerializer
