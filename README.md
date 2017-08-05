@@ -1,14 +1,10 @@
 # React + Phoenix boilerplate
 
-__NOTE:__ This represents Phoenix 1.3. It is finalised but has not been officially released yet. More information [here](https://gist.github.com/chrismccord/71ab10d433c98b714b75c886eff17357).
-
-This is a setup for an React + Phoenix project, using webpack 2 for bundling and simple users with authentication.
-
-This is supposed to be something like starter point not production boilerplate.
+This is a setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) for bundling and simple users with authentication.
 
 ## REQUIREMENTS
 - [Elixir](http://elixir-lang.org/)/[Mix](http://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html)/[Phoenix](http://www.phoenixframework.org/) ([Installation guide](http://www.phoenixframework.org/docs/installation), [Phoenix1.3](https://gist.github.com/chrismccord/71ab10d433c98b714b75c886eff17357))
-- [Node.js](https://nodejs.org/en/)/[npm](https://www.npmjs.com/) (Install using [nvm](https://github.com/creationix/nvm))
+- [Node.js](https://nodejs.org/en/)/[yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/) (Install using [nvm](https://github.com/creationix/nvm))
 - A [PostgreSQL](https://www.postgresql.org/) server running on your machine.
 
 **Frontend**
@@ -17,7 +13,7 @@ This is supposed to be something like starter point not production boilerplate.
 * [Redux logger](https://github.com/evgenyrodionov/redux-logger)
 * [React Router 4](https://github.com/ReactTraining/react-router) Declarative routing for React.
 * [Babel](http://babeljs.io) For ES6 and ES7 magic.
-* [Webpack 2](http://webpack.github.io) For bundling.
+* [Webpack 3](http://webpack.github.io) For bundling.
 * [Webpack Dev Middleware](http://webpack.github.io/docs/webpack-dev-middleware.html)
 * [Redux](https://github.com/reactjs/redux) Predictable state container for JavaScript apps.
 * [Redux Dev Tools](https://github.com/gaearon/redux-devtools) DevTools for Redux with hot reloading, action replay, and customizable UI. Watch [Dan Abramov's talk](https://www.youtube.com/watch?v=xsSnOQynTHs)
