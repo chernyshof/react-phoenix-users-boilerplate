@@ -14,7 +14,7 @@ class LoginForm extends Component {
 
     return (
       <form className="form-login card" onSubmit={handleSubmit(this.submit)}>
-        <h3>Login to Sling</h3>
+        <h3>Login to Boilerplate</h3>
         <Field
           name="email"
           type="email"

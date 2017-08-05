@@ -24,7 +24,7 @@ config :logger, :console,
 
 # Configures Guardian
 config :guardian, Guardian,
-  issuer: "Sling",
+  issuer: "Boilerplate",
   ttl: {30, :days},
   verify_issuer: true,
   serializer: Boilerplate.GuardianSerializer
