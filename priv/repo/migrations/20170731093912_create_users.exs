@@ -10,7 +10,7 @@ defmodule Boilerplate.Repo.Migrations.CreateUsers do
       timestamps()
     end
 
-    create unique_index(:users, [:username])
-    create unique_index(:users, [:email])
+    create index(:users, ["lower(username)"], unique: true)
+    create index(:users, ["lower(email)"], unique: true)
   end
 end

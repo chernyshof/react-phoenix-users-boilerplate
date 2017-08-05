@@ -50,9 +50,13 @@ defmodule Boilerplate.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    if !is_exist(attrs["username"], attrs["email"]) do
+      %User{}
+      |> User.registration_changeset(attrs)
+      |> Repo.insert()
+    else
+      {:error, :already_taken}
+    end
   end
 
   @doc """
@@ -102,6 +106,11 @@ defmodule Boilerplate.Accounts do
     User.changeset(user, %{})
   end
 
+  def is_exist(username, email) do
+    Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username)) ||
+      Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+  end
+
   def get_current_token(conn) do
     Guardian.Plug.current_token(conn)
   end
@@ -127,7 +136,7 @@ defmodule Boilerplate.Accounts do
   end
 
   def authenticate(%{"email" => email, "password" => password}) do
-    user = Repo.get_by(Boilerplate.Accounts.User, email: String.downcase(email))
+    user = Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
 
     case check_password(user, password) do
       true -> {:ok, user}
