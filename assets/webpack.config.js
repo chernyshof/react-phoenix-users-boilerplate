@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
@@ -10,7 +10,7 @@ const config = {
 
   entry: [
     // 'react-hot-loader/patch',
-    'webpack-dev-server/client?http://http://127.0.0.0:9000',
+    'webpack-dev-server/client?http://localhost:8080',
     // 'webpack/hot/only-dev-server',
     './main.js',
     './assets/scss/main.scss',
@@ -58,18 +58,25 @@ const config = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'sass-loader',
-              query: {
-                sourceMap: false,
-              },
-            },
-          ],
-        }),
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "sass-loader" // compiles Sass to CSS
+        }]
+        // use: ExtractTextPlugin.extract({
+        //   fallback: 'style-loader',
+        //   use: [
+        //     'css-loader',
+        //     {
+        //       loader: 'sass-loader',
+        //       query: {
+        //         sourceMap: false,
+        //       },
+        //     },
+        //   ],
+        // }),
       },
       { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg)$/, use: 'url-loader?limit=15000' },
@@ -88,9 +95,9 @@ const config = {
       'window.jQuery': 'jquery',
       Tether: 'tether',
     }),
-    new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
+    // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    // new OpenBrowserPlugin({ url: 'http://localhost:9000' }),
+    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
     // new webpack.HotModuleReplacementPlugin(),
   ],
 };
