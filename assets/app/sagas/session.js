@@ -42,7 +42,8 @@ function signup(data) {
 
 function* callSignup({ data }) {
   const result = yield call(signup, data);
-  if (result.data) {
+
+  if (result.data.data) {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
     yield put(reset('signup'));
@@ -81,6 +82,7 @@ function authenticate() {
 
 function* callAuthenticate() {
   const result = yield call(authenticate);
+
   if (result.data.data) {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
