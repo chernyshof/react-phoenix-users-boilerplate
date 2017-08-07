@@ -29,4 +29,28 @@ defmodule BoilerplateWeb.FallbackController do
     |> put_status(:unprocessable_entity)
     |> render(BoilerplateWeb.SessionView, "no_session.json")
   end
+
+  def call(conn, {:error, :invalid_issuer}) do
+    conn
+    |> put_status(:bad_request)
+    |> render(BoilerplateWeb.SessionView, "invalid_issuer.json")
+  end
+
+  def call(conn, {:error, :already_taken_username}) do
+    conn
+    |> put_status(:bad_request)
+    |> render(BoilerplateWeb.SessionView, "already_taken_username.json")
+  end
+
+  def call(conn, {:error, :already_taken_email}) do
+    conn
+    |> put_status(:bad_request)
+    |> render(BoilerplateWeb.SessionView, "already_taken_email.json")
+  end
+
+  def call(conn, {:error, "Unknown resource type"}) do
+    conn
+    |> put_status(:unauthorized)
+    |> render(BoilerplateWeb.SessionView, "wrong_token.json")
+  end
 end

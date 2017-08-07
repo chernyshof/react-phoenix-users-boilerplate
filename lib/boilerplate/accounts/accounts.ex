@@ -50,12 +50,16 @@ defmodule Boilerplate.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    if !is_exist(attrs["username"], attrs["email"]) do
-      %User{}
-      |> User.registration_changeset(attrs)
-      |> Repo.insert()
+    if !is_exist_username(attrs["username"]) do
+      if !is_exist_email(attrs["email"]) do
+        %User{}
+        |> User.registration_changeset(attrs)
+        |> Repo.insert()
+      else
+        {:error, :already_taken_email}
+      end
     else
-      {:error, :already_taken}
+      {:error, :already_taken_username}
     end
   end
 
@@ -106,9 +110,12 @@ defmodule Boilerplate.Accounts do
     User.changeset(user, %{})
   end
 
-  def is_exist(username, email) do
-    Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username)) ||
-      Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+  defp is_exist_username(username) do
+    Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username))
+  end
+
+  defp is_exist_email(email) do
+    Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
   end
 
   def get_current_token(conn) do

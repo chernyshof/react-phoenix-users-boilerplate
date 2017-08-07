@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export default class RedirectAuthenticated extends Component {
   render() {
-    const { path, exact, isAuthenticated, willAuthenticate, component } = this.props;
+    const { path, exact, isAuthenticated, component } = this.props;
     const RouteComponent = component;
 
     return (
@@ -14,9 +14,7 @@ export default class RedirectAuthenticated extends Component {
         path={path}
         render={(props) => {
           if (isAuthenticated) { return <Redirect to={{ pathname: '/' }} />; }
-          if (willAuthenticate) { return null; }
-          if (!willAuthenticate && !isAuthenticated) { return <RouteComponent {...props} />; }
-          return null;
+          return <RouteComponent {...props} />;
         }}
       />
     );
@@ -29,7 +27,6 @@ RedirectAuthenticated.propTypes = {
   path: PropTypes.string.isRequired,
   exact: PropTypes.bool,
   isAuthenticated: PropTypes.bool.isRequired,
-  willAuthenticate: PropTypes.bool.isRequired,
 };
 
 RedirectAuthenticated.defaultProps = {
