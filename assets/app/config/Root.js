@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 
 
 import { authenticate, unauthenticate } from 'actions/session';
-import { App,
+import {
+  App,
+  ErrorMessage,
   NotFound,
   Signup,
   Login,
@@ -33,14 +35,17 @@ class Root extends Component {
     };
 
     return (
-      <Router history={this.props.history}>
-        <Switch>
-          <MatchAuthenticated exact path="/" component={App} {...authProps} />
-          <RedirectAuthenticated path="/signup" component={Signup} {...authProps} />
-          <RedirectAuthenticated path="/login" component={Login} {...authProps} />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </Router>
+      <div className="full-height">
+        <ErrorMessage />
+        <Router history={this.props.history}>
+          <Switch>
+            <MatchAuthenticated exact path="/" component={App} {...authProps} />
+            <RedirectAuthenticated path="/signup" component={Signup} {...authProps} />
+            <RedirectAuthenticated path="/login" component={Login} {...authProps} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

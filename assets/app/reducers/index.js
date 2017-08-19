@@ -3,11 +3,13 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as form } from 'redux-form';
 
 import session from 'reducers/session';
+import errors from 'reducers/errors';
 import { types as sessionTypes } from 'actions/session';
 
 const appReducer = combineReducers({
   form,
   session,
+  errors,
   routing: routerReducer,
 });
 
