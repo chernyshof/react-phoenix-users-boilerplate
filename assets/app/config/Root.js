@@ -42,7 +42,7 @@ class Root extends Component {
             <MatchAuthenticated exact path="/" component={App} {...authProps} />
             <RedirectAuthenticated path="/signup" component={Signup} {...authProps} />
             <RedirectAuthenticated path="/login" component={Login} {...authProps} />
-            <Route path="*" component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
         </Router>
       </div>
