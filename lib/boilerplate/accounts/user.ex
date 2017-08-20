@@ -19,6 +19,7 @@ defmodule Boilerplate.Accounts.User do
     |> cast(attrs, [:username, :email])
     |> validate_required([:username, :email])
     |> validate_length(:username, min: 1, max: 20)
+    |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
     |> unique_constraint(:username)
     |> unique_constraint(:email)
   end

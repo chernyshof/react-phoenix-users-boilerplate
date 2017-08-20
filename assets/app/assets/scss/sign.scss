@@ -6,6 +6,34 @@
   background: $grey;
   padding-top: 40px;
 
+  .input {
+    position: relative;
+
+    .validation-error {
+      white-space: nowrap;
+      padding: 0 5px;
+      padding-bottom: 2px;
+      top: 5px;
+      left: 110%;
+      position: absolute;
+      background: #e53935;
+      color: white;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      &:before {
+        content:"";
+        position: absolute;
+        right: 100%;
+        width: 0;
+        height: 0;
+        border-top: 13px solid transparent;
+        border-right: 20px solid #e53935;
+        border-bottom: 13px solid transparent;
+      }
+    }
+  }
+
   .form-login, .form-signup {
     margin: 0 auto;
     max-width: 330px;

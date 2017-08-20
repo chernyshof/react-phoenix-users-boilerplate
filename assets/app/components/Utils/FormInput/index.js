@@ -15,7 +15,7 @@ export default class Input extends Component {
           className="form-control"
         />
         {meta.touched && meta.error &&
-          <div>{meta.error}</div>
+          <div className="validation-error">{meta.error}</div>
         }
       </div>
     );
