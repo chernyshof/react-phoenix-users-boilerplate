@@ -7,7 +7,7 @@
     <meta name="description" content="description">
     <meta name="author" content="Dmitriy Chernyshov">
 
-    <title>Hello Boilerplate!</title>
+    <title>Boilerplate</title>
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/style.css") %>">
   </head>
