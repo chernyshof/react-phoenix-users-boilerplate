@@ -1,6 +1,96 @@
 # React + Phoenix boilerplate
 
-This is a setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) for bundling and simple users with authentication.
+This is a setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) and users with authentication.
+
+## STARTING PROJECT
+```
+git clone https://github.com/chernyshof/elephang appname
+```
+
+Changing app name in files(commands for unix like systems)
+```
+grep -rl Boilerplate | xargs sed -i s@Boilerplate@Appname@g
+grep --exclude={package.json,yarn.lock,.babelrc} -rl boilerplate | xargs sed -i s@boilerplate@appname@g
+find . -depth -exec rename 's/boilerplate/appname/g' {} \; 
+```
+
+Download dependencies
+```
+mix deps.get
+mix ecto.create
+mix ecto.migrate
+cd assets
+yarn install
+cd ..
+```
+
+Reinit git
+```
+rm -rf .git
+git init
+git add priv/static/favicon.ico
+git add priv/static/images/phoenix.png
+```
+
+Start server
+```
+mix phx.server
+```
+
+## DEPLOY TO HEROKU
+Create heroku application
+```
+heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+```
+
+Optional change app address 
+```
+heroku apps:rename appname
+```
+
+Adding phoenix buildpack
+```
+heroku buildpacks:add https://github.com/chernyshof/heroku-buildpack-phoenix-static.git
+```
+
+Add you address
+in `config/prod.exs`
+change in config, :appname, Appname.Repo, url line(if needed)
+`url: [scheme: "https", host: "appnameaddress.herokuapp.com", port: 443],`
+
+Creating Environment Variables
+```
+heroku addons:create heroku-postgresql:hobby-dev
+heroku config:set POOL_SIZE=18
+```
+
+Secret key
+gen secret key
+```
+$ mix phx.gen.secret
+xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53
+```
+now set key that you got in heroku
+```
+heroku config:set SECRET_KEY_BASE="xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53"
+```
+
+Guardian secret key
+```
+$ mix phx.gen.secret
+xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53
+```
+now set key that you got in heroku
+```
+heroku config:set GUARDIAN_SECRET_KEY="xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53"
+```
+
+Deploy time!
+```
+git push heroku master
+heroku run "POOL_SIZE=2 mix ecto.migrate"
+```
+
 
 ## REQUIREMENTS
 - [Elixir](http://elixir-lang.org/)/[Mix](http://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html)/[Phoenix](http://www.phoenixframework.org/) ([Installation guide](http://www.phoenixframework.org/docs/installation), [Phoenix1.3](https://gist.github.com/chrismccord/71ab10d433c98b714b75c886eff17357))
