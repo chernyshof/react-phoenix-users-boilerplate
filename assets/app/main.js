@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
+// import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { browserHistory } from 'react-router';
 
@@ -20,18 +20,18 @@ const history = createHistory();
 
 const render = (Component) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <Component history={history} />
-    </Provider>,
+    <AppContainer>
+      <Component history={history} store={store} />
+    </AppContainer>,
     document.getElementById('root'),
   );
 };
 
 render(Root);
 
-// if (module.hot) {
-//   module.hot.accept('./config/Root', () => {
-//     const newApp = require('./config/Root').default;
-//     render(newApp);
-//   });
-// }
+if (module.hot) {
+  module.hot.accept('./config/Root', () => {
+    const newApp = require('./config/Root').default;
+    render(newApp);
+  });
+}

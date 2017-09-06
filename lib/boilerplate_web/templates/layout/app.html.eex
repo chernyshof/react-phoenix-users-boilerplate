@@ -14,6 +14,10 @@
 
   <body>
     <div id="root"></div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= if Mix.env == :dev do %>
+      <script src='http://localhost:3000/js/app.js'></script>
+    <% else %>
+      <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <% end %>
   </body>
 </html>

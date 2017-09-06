@@ -1,18 +1,30 @@
 const { resolve } = require('path');
 
+const publicPath = 'http://localhost:3000/'; 
 const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
+  // devtool: 'inline-source-map',
 
   entry: [
-    // 'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
-    // 'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
+    // activate HMR for React
+
+    'webpack-dev-server/client?http://localhost:3000',
+    // bundle the client for webpack-dev-server
+    // and connect to the provided endpoint
+
+    'webpack/hot/only-dev-server',
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+ 
     './main.js',
+    // entry point
+
     './assets/scss/main.scss',
     'jquery/dist/jquery.js',
     'tether/dist/js/tether.js',
@@ -35,13 +47,23 @@ const config = {
   output: {
     filename: 'js/app.js',
     path: resolve(__dirname, '../priv/static'),
-    publicPath: '/',
+    publicPath: publicPath,
   },
 
   context: resolve(__dirname, 'app'),
 
   devServer: {
-    hot: false,
+    host: 'localhost',
+    port: 3000,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    hot: true,
+    // enable HMR on the server
+
+    historyApiFallback: true,
+    // respond to 404s with index.html
+
     contentBase: resolve(__dirname, '../priv/static'),
     publicPath: '/',
   },
@@ -95,10 +117,19 @@ const config = {
       'window.jQuery': 'jquery',
       Tether: 'tether',
     }),
-    // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
+    new webpack.HotModuleReplacementPlugin(),
+    // enable HMR globally
+
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+
+    new webpack.NoEmitOnErrorsPlugin(),
+    // do not emit compiled assets that include errors
+
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    // new webpack.HotModuleReplacementPlugin(),
+ 
+    // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
+    // new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
   ],
 };
 
