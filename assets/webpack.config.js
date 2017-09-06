@@ -2,7 +2,6 @@ const { resolve } = require('path');
 
 const publicPath = 'http://localhost:3000/'; 
 const webpack = require('webpack');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
@@ -89,18 +88,6 @@ const config = {
         }, {
             loader: "sass-loader" // compiles Sass to CSS
         }]
-        // use: ExtractTextPlugin.extract({
-        //   fallback: 'style-loader',
-        //   use: [
-        //     'css-loader',
-        //     {
-        //       loader: 'sass-loader',
-        //       query: {
-        //         sourceMap: false,
-        //       },
-        //     },
-        //   ],
-        // }),
       },
       { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg)$/, use: 'url-loader?limit=15000' },
@@ -129,8 +116,6 @@ const config = {
     // do not emit compiled assets that include errors
 
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
- 
-    // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
     new OpenBrowserPlugin({ url: 'http://localhost:4000' }),
   ],
 };
