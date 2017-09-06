@@ -48,6 +48,8 @@ const config = {
     filename: 'js/app.js',
     path: resolve(__dirname, '../priv/static'),
     publicPath: publicPath,
+    hotUpdateChunkFilename: 'hot-update.js',
+    hotUpdateMainFilename: 'hot-update.json'
   },
 
   context: resolve(__dirname, 'app'),
