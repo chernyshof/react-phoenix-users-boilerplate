@@ -1,6 +1,6 @@
 # React + Phoenix boilerplate
 
-This is a setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) and users with authentication.
+This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) and users with authentication.
 
 ## STARTING PROJECT
 ```
@@ -28,8 +28,8 @@ Reinit git
 ```
 rm -rf .git
 git init
-git add priv/static/favicon.ico
-git add priv/static/images/phoenix.png
+git add priv/static/favicon.ico -f
+git add priv/static/images/phoenix.png -f
 ```
 
 Start server
@@ -37,7 +37,7 @@ Start server
 mix phx.server
 ```
 
-## DEPLOY TO HEROKU
+## DEPLOYING TO HEROKU
 Create heroku application
 ```
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
