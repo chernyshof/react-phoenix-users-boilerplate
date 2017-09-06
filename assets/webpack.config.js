@@ -4,7 +4,7 @@ const publicPath = 'http://localhost:3000/';
 const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
@@ -131,7 +131,7 @@ const config = {
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
  
     // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
-    // new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
+    new OpenBrowserPlugin({ url: 'http://localhost:4000' }),
   ],
 };
 

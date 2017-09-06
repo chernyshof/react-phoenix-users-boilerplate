@@ -116,6 +116,7 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 * [Sass](http://sass-lang.com/) Css extenstion language.
 * [PostCSS](http://postcss.org/) Tool for transforming css to javascript
 * [husky](https://github.com/typicode/husky) Husky can prevent bad commit, push and more.
+* [OpenBrowserPlugin](https://github.com/baldore/open-browser-webpack-plugin) Opens a new browser tab when Webpack loads.
 and other stuff...
 
 **Backend**
