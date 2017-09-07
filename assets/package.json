@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm run production",
-    "start": "webpack-dev-server --colors",
+    "start": "webpack-dev-server --colors --stdin",
     "production": "webpack --config webpack.production.config.js --progress --profile --colors",
     "lint": "eslint app",
     "test": "jest",
