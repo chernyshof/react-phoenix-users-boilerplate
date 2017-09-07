@@ -43,7 +43,7 @@ export class ErrorMessage extends Component {
 }
 
 ErrorMessage.propTypes = {
-  errors: PropTypes.array,  // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 ErrorMessage.defaultProps = {

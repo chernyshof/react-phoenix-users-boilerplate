@@ -54,12 +54,12 @@ class Root extends Component {
 
 
 Root.propTypes = {
-  history: PropTypes.object.isRequired,  // eslint-disable-line react/forbid-prop-types
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   authenticate: PropTypes.func.isRequired,
   unauthenticate: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   willAuthenticate: PropTypes.bool.isRequired,
-  store: PropTypes.object.isRequired,  // eslint-disable-line react/forbid-prop-types
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapDispatchToProps = dispatch => ({
