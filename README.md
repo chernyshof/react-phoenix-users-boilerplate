@@ -3,8 +3,9 @@
 This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) and users with authentication.
 
 ## STARTING PROJECT
+[You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 ```
-git clone https://github.com/chernyshof/elephang appname
+git clone https://github.com/chernyshof/react-phoenix-users-boilerplate appname
 ```
 
 Changing app name in files(commands for unix like systems)
@@ -38,6 +39,8 @@ mix phx.server
 ```
 
 ## DEPLOYING TO HEROKU
+[You should have installed heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
+
 Create heroku application
 ```
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
@@ -56,7 +59,9 @@ heroku buildpacks:add https://github.com/chernyshof/heroku-buildpack-phoenix-sta
 Add you address
 in `config/prod.exs`
 change in config, :appname, Appname.Repo, url line(if needed)
-`url: [scheme: "https", host: "appnameaddress.herokuapp.com", port: 443],`
+```elixir
+url: [scheme: "https", host: "appnameaddress.herokuapp.com", port: 443],
+```
 
 Creating Environment Variables
 ```
