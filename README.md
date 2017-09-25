@@ -6,6 +6,7 @@ This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using
 [You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 ```
 git clone https://github.com/chernyshof/react-phoenix-users-boilerplate appname
+cd appname
 ```
 
 Changing app name in files(commands for unix like systems)
