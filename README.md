@@ -1,6 +1,6 @@
 # React + Phoenix boilerplate
 
-This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.4) project, using webpack(3) and users with authentication.
+This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.5) project, using webpack(3) and users with authentication.
 
 ## STARTING PROJECT
 [You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -127,6 +127,6 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 and other stuff...
 
 **Backend**
-* [Elixir 1.4](http://elixir-lang.org/)
+* [Elixir 1.5](http://elixir-lang.org/)
 * [Phoenix 1.3](http://www.phoenixframework.org/)
 * [Credo](https://github.com/rrrene/credo) Static code analysis tool for the Elixir language.
