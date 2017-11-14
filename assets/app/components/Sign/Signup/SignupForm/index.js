@@ -16,6 +16,13 @@ class SignupForm extends Component {
       <form className="form-signup card" onSubmit={handleSubmit(this.submit)} noValidate>
         <h3>Create an account</h3>
         <Field
+          name="name"
+          type="text"
+          component={FormInput}
+          placeholder="Full name"
+          className="form-control"
+        />
+        <Field
           name="username"
           type="text"
           component={FormInput}
@@ -61,6 +68,12 @@ SignupForm.propTypes = {
 const validate = (values) => {
   const errors = {};
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  if (!values.name) {
+    errors.name = 'Required';
+  } else if (values.name.length < 1 || values.name.length > 255) {
+    errors.name = 'Must be less than 256 characters';
+  }
 
   if (!values.username) {
     errors.username = 'Required';

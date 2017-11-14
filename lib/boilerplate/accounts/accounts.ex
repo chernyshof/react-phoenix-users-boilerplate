@@ -49,7 +49,8 @@ defmodule Boilerplate.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(attrs \\ %{}) do
+  def create_user(attrs \\ %{}, superuser \\ %{}) do
+    attrs = match_superuser(attrs, superuser)
     if !is_exist_username(attrs["username"]) do
       if !is_exist_email(attrs["email"]) do
         %User{}
@@ -75,7 +76,9 @@ defmodule Boilerplate.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs) do
+  def update_user(%User{} = user, attrs, superuser \\ %{}) do
+    attrs = match_superuser(attrs, superuser)
+
     user
     |> User.changeset(attrs)
     |> Repo.update()
@@ -155,6 +158,21 @@ defmodule Boilerplate.Accounts do
     case user do
       nil -> Comeonin.Bcrypt.dummy_checkpw()
       _ -> Comeonin.Bcrypt.checkpw(password, user.password_hash)
+    end
+  end
+
+  @doc """
+  Just to be sure not superuser can change his rights
+  """
+  defp match_superuser(attrs, superuser) do
+    if superuser[:is_superuser] || superuser["is_superuser"] do
+      attrs
+    else
+      attrs
+      |> Map.delete(:is_staff)
+      |> Map.delete(:is_superuser)
+      |> Map.delete("is_staff")
+      |> Map.delete("is_superuser")
     end
   end
 end
