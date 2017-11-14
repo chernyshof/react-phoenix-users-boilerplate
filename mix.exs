@@ -40,7 +40,7 @@ defmodule Boilerplate.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.1", only: :dev},
       {:gettext, "~> 0.11"},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:credo, "~> 0.8.8", only: [:dev, :test], runtime: false},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0.3"},
       {:bcrypt_elixir, "~> 1.0"},
