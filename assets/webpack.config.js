@@ -5,6 +5,8 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const config = {
   devtool: 'cheap-module-eval-source-map',
   // devtool: 'inline-source-map',
@@ -79,15 +81,11 @@ const config = {
         exclude: /node_modules/,
       },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader" // translates CSS into CommonJS
-        }, {
-            loader: "sass-loader" // compiles Sass to CSS
-        }]
+        test: /\.scss$/, // files ending with .scss
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+        })),
       },
       { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg)$/, use: 'url-loader?limit=15000' },
@@ -117,6 +115,8 @@ const config = {
 
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
     new OpenBrowserPlugin({ url: 'http://localhost:4000' }),
+
+    new ExtractTextPlugin({ filename: './css/style.css', disable: false, allChunks: true }),
   ],
 };
 
