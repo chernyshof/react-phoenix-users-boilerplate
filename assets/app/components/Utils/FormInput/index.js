@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 
 export default class Input extends Component {
   render() {
-    const { input, type, placeholder, meta } = this.props;
+    const {
+      input,
+      type,
+      placeholder,
+      meta,
+    } = this.props;
 
     return (
       <div className="input">

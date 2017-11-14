@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 
 export default class RedirectAuthenticated extends Component {
   render() {
-    const { path, exact, isAuthenticated, component } = this.props;
+    const {
+      path,
+      exact,
+      isAuthenticated,
+      component,
+    } = this.props;
     const RouteComponent = component;
 
     return (
