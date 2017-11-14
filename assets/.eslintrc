@@ -1,12 +1,12 @@
 {
   "parser": "babel-eslint",
-  "plugins": ["react", "flowtype", "import"],
+  "plugins": ["react", "import"],
   "env": {
     "browser": true,
     "node": true,
     "mocha": true
   },
-  "extends": ["airbnb", "plugin:flowtype/recommended"],
+  "extends": ["airbnb"],
   "rules": {
     "space-before-function-paren": 0,
     "react/prefer-stateless-function": 0,

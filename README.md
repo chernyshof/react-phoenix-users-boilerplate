@@ -127,7 +127,6 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 * [ESLint](http://eslint.org) And many librarys for this.
 * [Jest](https://facebook.github.io/jest/) JavaScript Testing framework.
 * [Enzyme](http://airbnb.io/enzyme/) JavaScript Testing utilities for React.
-* [Flow](https://flow.org/) Static typechecker for JavaScript. 
 * [Sass](http://sass-lang.com/) Css extenstion language.
 * [PostCSS](http://postcss.org/) Tool for transforming css to javascript
 * [husky](https://github.com/typicode/husky) Husky can prevent bad commit, push and more.
