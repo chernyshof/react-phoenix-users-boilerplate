@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { browserHistory } from 'react-router';
 
@@ -21,7 +21,9 @@ const history = createHistory();
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component history={history} store={store} />
+      <Provider store={store}>
+        <Component history={history} />
+      </Provider>
     </AppContainer>,
     document.getElementById('root'),
   );
