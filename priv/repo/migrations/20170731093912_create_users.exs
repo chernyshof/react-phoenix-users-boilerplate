@@ -9,6 +9,7 @@ defmodule Boilerplate.Repo.Migrations.CreateUsers do
       add :password_hash, :string, null: false
       add :is_staff, :boolean, null: false, default: false
       add :is_superuser, :boolean, null: false, default: false
+      add :last_login, :naive_datetime, default: fragment("now()")
 
       timestamps()
     end
