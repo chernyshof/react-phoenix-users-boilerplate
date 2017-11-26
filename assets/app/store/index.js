@@ -4,8 +4,8 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'react-router-redux';
 
-
 import reducers from 'reducers';
+
 
 const loggerMiddleware = createLogger({
   level: 'info',
@@ -20,8 +20,15 @@ export default function configureStore(browserHistory) {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   // const reduxRouterMiddleware = syncHistoryWithStore(browserHistory);
+
+  let middleware = [sagaMiddleware, router];
+
+  if (process.env.NODE_ENV !== 'production') {
+    middleware = [...middleware, loggerMiddleware];
+  }
+
   const createStoreWithMiddleware =
-    composeEnhancers(applyMiddleware(sagaMiddleware, router, loggerMiddleware))(createStore);
+    composeEnhancers(applyMiddleware(...middleware))(createStore);
 
   return createStoreWithMiddleware(reducers);
 }
