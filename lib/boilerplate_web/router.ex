@@ -11,17 +11,37 @@ defmodule BoilerplateWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+  end
+
+  pipeline :unauthorized do
+    plug :fetch_session
+  end
+
+  pipeline :authorized do
+    plug :fetch_session
+    plug Guardian.Plug.Pipeline, module: BoilerplateWeb.Guardian,
+      error_handler: BoilerplateWeb.AuthErrorController
+    plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
   end
 
   scope "/api", BoilerplateWeb do
     pipe_through :api
 
-    post "/sessions", SessionController, :create
-    delete "/sessions", SessionController, :delete
-    post "/sessions/refresh", SessionController, :refresh
-    resources "/users", UserController, only: [:create]
+
+    scope "/" do
+      pipe_through :unauthorized
+
+      post "/sessions", SessionController, :create
+      resources "/users", UserController, only: [:create]
+    end
+
+    scope "/" do
+      pipe_through :authorized
+
+      delete "/sessions", SessionController, :delete
+      post "/sessions/refresh", SessionController, :refresh
+    end
   end
 
   scope "/", BoilerplateWeb do

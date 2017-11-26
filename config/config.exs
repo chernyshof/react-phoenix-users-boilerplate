@@ -23,11 +23,11 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Configures Guardian
-config :guardian, Guardian,
-  issuer: "Boilerplate",
+config :boilerplate, BoilerplateWeb.Guardian,
+  issuer: "boilerplate",
   ttl: {30, :days},
-  verify_issuer: true,
-  serializer: Boilerplate.GuardianSerializer
+  verify_issuer: true
+  # serializer: Boilerplate.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

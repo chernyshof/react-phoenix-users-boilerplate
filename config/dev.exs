@@ -62,5 +62,5 @@ config :boilerplate, Boilerplate.Repo,
   pool_size: 10
 
 # Configure Guardian secret key
-config :guardian, Guardian,
+config :boilerplate, BoilerplateWeb.Guardian,
   secret_key: "OSMuzr1uWJthItzsyXItnRoM3MLNaZXUwkamEHTwxUBYPPDuQTLPJnMBMiMATRjF"

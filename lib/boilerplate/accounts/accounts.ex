@@ -119,27 +119,27 @@ defmodule Boilerplate.Accounts do
   end
 
   def get_current_token(conn) do
-    Guardian.Plug.current_token(conn)
+    BoilerplateWeb.Guardian.Plug.current_token(conn)
   end
 
-  def revoke_token!(jwt) do
-    Guardian.revoke!(jwt)
+  def sign_out(conn) do
+    BoilerplateWeb.Guardian.Plug.sign_out(conn)
   end
 
   def get_claims(conn) do
-    Guardian.Plug.claims(conn)
+    BoilerplateWeb.Guardian.Plug.current_claims(conn)
   end
 
-  def refresh_token!(jwt, claims) do
-    Guardian.refresh!(jwt, claims, %{ttl: {30, :days}})
+  def refresh_token(jwt) do
+    BoilerplateWeb.Guardian.refresh(jwt)
   end
 
   def get_current_user(conn) do
-    Guardian.Plug.current_resource(conn)
+    BoilerplateWeb.Guardian.Plug.current_resource(conn)
   end
 
   def sign_in_user(conn, user) do
-    Guardian.Plug.api_sign_in(conn, user, :access)
+    BoilerplateWeb.Guardian.Plug.sign_in(conn, user)
   end
 
   def authenticate(%{"email" => email, "password" => password}) do

@@ -68,7 +68,7 @@ config :boilerplate, Boilerplate.Repo,
 #     config :boilerplate, BoilerplateWeb.Endpoint, server: true
 #
 
-config :guardian, Guardian,
+config :boilerplate, BoilerplateWeb.Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
 # Finally import the config/prod.secret.exs
