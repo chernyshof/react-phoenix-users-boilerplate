@@ -24,6 +24,9 @@ erl_crash.dump
 # Dependency directories
 /assets/node_modules
 
+# Ignore test coverage results
+/assets/coverage
+
 # Optional npm cache directory
 /assets/.npm
 /assets/npm-debug.log*

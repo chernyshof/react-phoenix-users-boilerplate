@@ -50,7 +50,8 @@ const config = {
     path: resolve(__dirname, '../priv/static'),
     publicPath: publicPath,
     hotUpdateChunkFilename: 'hot-update.js',
-    hotUpdateMainFilename: 'hot-update.json'
+    hotUpdateMainFilename: 'hot-update.json',
+    crossOriginLoading: "anonymous",
   },
 
   context: resolve(__dirname, 'app'),
@@ -69,6 +70,13 @@ const config = {
 
     contentBase: resolve(__dirname, '../priv/static'),
     publicPath: '/',
+
+    // overlay: true,
+
+    overlay: {
+      warnings: true,
+      errors: true,
+    },
   },
 
   module: {
