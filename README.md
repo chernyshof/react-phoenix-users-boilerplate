@@ -3,20 +3,28 @@
 This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.5) project, using webpack(3) and users with authentication.
 
 ## STARTING PROJECT
-[You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+#### [You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 ```
 git clone https://github.com/chernyshof/react-phoenix-users-boilerplate appname
 cd appname
 ```
 
-Changing app name in files(commands for unix like systems)
+#### Changing app name in files(commands for unix like systems)
 ```
 grep -rl Boilerplate | xargs sed -i s@Boilerplate@Appname@g
 grep --exclude={package.json,yarn.lock,.babelrc} -rl boilerplate | xargs sed -i s@boilerplate@appname@g
 find . -depth -exec rename 's/boilerplate/appname/g' {} \; 
 ```
 
-Download dependencies
+#### Reinit git
+```
+rm -rf .git
+git init
+git add priv/static/favicon.ico -f
+git add priv/static/images/phoenix.png -f
+```
+
+#### Download dependencies
 ```
 mix deps.get
 mix ecto.create
@@ -26,15 +34,8 @@ yarn install
 cd ..
 ```
 
-Reinit git
-```
-rm -rf .git
-git init
-git add priv/static/favicon.ico -f
-git add priv/static/images/phoenix.png -f
-```
 
-Start server
+#### Start server
 ```
 mix phx.server
 ```
@@ -50,56 +51,56 @@ You probably wanna change it :)
 ## DEPLOYING TO HEROKU
 [You should have installed heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
 
-Create heroku application
+#### Create heroku application
 ```
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
 ```
 
-Optional change app address 
+#### Optional change app address 
 ```
 heroku apps:rename appname
 ```
 
-Adding phoenix buildpack
+#### Adding phoenix buildpack
 ```
 heroku buildpacks:add https://github.com/chernyshof/heroku-buildpack-phoenix-static.git
 ```
 
-Add you address
+#### Add you address
 in `config/prod.exs`
 change in config, :appname, Appname.Repo, url line(if needed)
 ```elixir
 url: [scheme: "https", host: "appnameaddress.herokuapp.com", port: 443],
 ```
 
-Creating Environment Variables
+#### Creating Environment Variables
 ```
 heroku addons:create heroku-postgresql:hobby-dev
 heroku config:set POOL_SIZE=18
 ```
 
-Secret key
+#### Secret key
 gen secret key
 ```
 $ mix phx.gen.secret
 xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53
 ```
-now set key that you got in heroku
+##### now set key that you got in heroku
 ```
 heroku config:set SECRET_KEY_BASE="xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53"
 ```
 
-Guardian secret key
+#### Guardian secret key
 ```
 $ mix phx.gen.secret
 xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53
 ```
-now set key that you got in heroku
+##### now set key that you got in heroku
 ```
 heroku config:set GUARDIAN_SECRET_KEY="xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53"
 ```
 
-Deploy time!
+#### Deploy time!
 ```
 git push heroku master
 heroku run "POOL_SIZE=2 mix ecto.migrate"
