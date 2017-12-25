@@ -10,7 +10,7 @@ class LoginForm extends Component {
   submit = (data, dispatch) => dispatch(login(data));
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, invalid } = this.props;
 
     return (
       <form className="form-login card" onSubmit={handleSubmit(this.submit)} noValidate>
@@ -29,7 +29,7 @@ class LoginForm extends Component {
         />
         <button
           type="submit"
-          disabled={submitting}
+          disabled={invalid || submitting}
           className="btn btn-primary btn-lg btn-block"
         >
           {submitting ? 'Logging in...' : 'Login'}
@@ -46,6 +46,7 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   submitting: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
