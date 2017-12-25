@@ -80,7 +80,7 @@ const validate = (values) => {
   if (!values.username) {
     errors.username = 'Required';
   } else if (!usernameRegex.test(values.username)) {
-    errors.username = 'EN letters, digits, \'.\', \'_\' are accepted';
+    errors.username = 'EN letters, digits, \'.\' and \'_\' are accepted';
   } else if (values.username.length < 1 || values.username.length > 26) {
     errors.username = 'Must be less than 27 characters';
   }

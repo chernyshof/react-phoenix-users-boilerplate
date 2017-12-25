@@ -26,7 +26,7 @@ const config = {
     './main.js',
     // entry point
 
-    './assets/scss/main.scss',
+    './assets/scss/index.scss',
     'jquery/dist/jquery.js',
     'tether/dist/js/tether.js',
     'bootstrap/dist/js/bootstrap.js',

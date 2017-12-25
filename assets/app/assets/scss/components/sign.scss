@@ -1,5 +1,3 @@
-@import 'variables.scss';
-
 .login, .signup {
   height: 100%;
   width: 100%;
@@ -16,7 +14,7 @@
       top: 5px;
       left: 110%;
       position: absolute;
-      background: #e53935;
+      background: $error;
       color: white;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -28,7 +26,7 @@
         width: 0;
         height: 0;
         border-top: 13px solid transparent;
-        border-right: 20px solid #e53935;
+        border-right: 20px solid $error;
         border-bottom: 13px solid transparent;
       }
     }
