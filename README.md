@@ -1,6 +1,6 @@
 # React + Phoenix boilerplate
 
-This is a basic setup for an React(15) + Phoenix(1.3)/Elixir(1.5) project, using webpack(3) and users with authentication.
+This is a basic setup for an React(16) + Phoenix(1.3)/Elixir(1.5) project, using webpack(3) and users with authentication.
 
 ## STARTING PROJECT
 #### [You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
