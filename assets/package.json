@@ -8,6 +8,7 @@
     "start": "webpack-dev-server --colors --stdin",
     "production": "webpack --config webpack.production.config.js --progress --profile --colors",
     "lint": "eslint app",
+    "lintf": "eslint app --fix",
     "test": "jest",
     "precommit": "cross-env npm run lint && npm test",
     "prepush": "cross-env npm run lint && npm test",
