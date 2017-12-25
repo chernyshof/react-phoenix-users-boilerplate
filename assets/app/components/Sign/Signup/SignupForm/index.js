@@ -69,6 +69,7 @@ SignupForm.propTypes = {
 const validate = (values) => {
   const errors = {};
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const usernameRegex = /^[A-Za-z0-9._]+$/;
 
   if (!values.name) {
     errors.name = 'Required';
@@ -78,6 +79,8 @@ const validate = (values) => {
 
   if (!values.username) {
     errors.username = 'Required';
+  } else if (!usernameRegex.test(values.username)) {
+    errors.username = 'EN letters, digits, \'.\', \'_\' are accepted';
   } else if (values.username.length < 1 || values.username.length > 26) {
     errors.username = 'Must be less than 27 characters';
   }

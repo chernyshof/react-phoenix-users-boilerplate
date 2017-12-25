@@ -24,11 +24,11 @@ defmodule BoilerplateWeb.SessionView do
   end
 
   def render("already_taken_username.json", _) do
-    %{errors: "This username has already been taken. Please pick another username"}
+    %{errors: "This username has already been taken. Please take another username"}
   end
 
   def render("already_taken_email.json", _) do
-    %{errors: "This email has already been taken. Please pick another email"}
+    %{errors: "This email has already been taken. Please take another email"}
   end
 
   def render("invalid_token.json", _) do

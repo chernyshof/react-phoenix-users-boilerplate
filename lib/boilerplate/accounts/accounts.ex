@@ -166,8 +166,12 @@ defmodule Boilerplate.Accounts do
     end
   end
 
+  defp is_superuser(superuser) do
+    Map.get(superuser, :is_superuser) || superuser["is_superuser"]
+  end
+
   defp match_superuser_changeset(%User{} = user, attrs, superuser) do
-    if superuser[:is_superuser] || superuser["is_superuser"] do
+    if is_superuser(superuser) do
       User.superuser_changeset(user, attrs)
     else
       User.changeset(user, attrs)
@@ -175,7 +179,7 @@ defmodule Boilerplate.Accounts do
   end
 
   defp match_superuser_registration_changeset(%User{} = user, attrs, superuser) do
-    if superuser[:is_superuser] || superuser["is_superuser"] do
+    if is_superuser(superuser) do
       User.superuser_registration_changeset(user, attrs)
     else
       User.registration_changeset(user, attrs)
