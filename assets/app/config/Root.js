@@ -40,8 +40,8 @@ class Root extends Component {
         <Router history={this.props.history}>
           <Switch>
             <MatchAuthenticated exact path="/" component={App} {...authProps} />
-            <RedirectAuthenticated path="/signup" component={Signup} {...authProps} />
-            <RedirectAuthenticated path="/login" component={Login} {...authProps} />
+            <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps} />
+            <RedirectAuthenticated exact path="/login" component={Login} {...authProps} />
             <Route component={NotFound} />
           </Switch>
         </Router>
