@@ -8,7 +8,7 @@ export default class Signup extends Component {
       <DocumentTitle title="Signup">
         <div className="signup">
           <div className="container">
-            <SignupForm onSubmit={this.handleSignup} />
+            <SignupForm />
           </div>
         </div>
       </DocumentTitle>
