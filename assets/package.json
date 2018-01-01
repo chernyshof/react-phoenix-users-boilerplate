@@ -24,14 +24,13 @@
       "node_modules"
     ],
     "moduleNameMapper": {
-      "^@components$": "<rootDir>/app/components/index.js",
-      "^@reducers$": "<rootDir>/app/reducers",
-      "^@actions$": "<rootDir>/app/actions",
-      "^@config$": "<rootDir>/app/config",
-      "^@store$": "<rootDir>/app/store",
-      "^@utils$": "<rootDir>/app/utils",
-      "^@sagas$": "<rootDir>/app/sagas"
-    }
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/private/jest/fileMock.js",
+      "^components$": "<rootDir>/private/jest/componentsMock.js"
+    },
+    "setupFiles": [
+      "<rootDir>/private/jest/shim.js",
+      "<rootDir>/private/jest/setupTests.js"
+    ]
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -75,7 +74,8 @@
     "copy-webpack-plugin": "^4.3.1",
     "css-hot-loader": "^1.3.5",
     "css-loader": "^0.28.7",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-import-resolver-webpack": "^0.8.3",

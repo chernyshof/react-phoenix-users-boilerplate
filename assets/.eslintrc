@@ -3,6 +3,7 @@
   "plugins": ["react", "import"],
   "env": {
     "browser": true,
+    "jest": true,
     "node": true,
     "mocha": true
   },
