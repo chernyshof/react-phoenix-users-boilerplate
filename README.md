@@ -111,6 +111,7 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 - [Elixir](http://elixir-lang.org/)/[Mix](http://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html)/[Phoenix](http://www.phoenixframework.org/) ([Installation guide](http://www.phoenixframework.org/docs/installation), [Phoenix1.3](https://gist.github.com/chrismccord/71ab10d433c98b714b75c886eff17357))
 - [Node.js](https://nodejs.org/en/)/[yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
 - A [PostgreSQL](https://www.postgresql.org/) server running on your machine.
+- [Watchman](https://facebook.github.io/watchman/) file watching service
 
 ## USED PLUGINS AND TECHNOLOGIES
 **Frontend**
