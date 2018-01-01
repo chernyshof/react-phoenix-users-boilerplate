@@ -9,6 +9,9 @@ config :boilerplate, BoilerplateWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Reduce number of rounds
+config :bcrypt_elixir, log_rounds: 4
+
 # Configure your database
 config :boilerplate, Boilerplate.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -17,3 +20,7 @@ config :boilerplate, Boilerplate.Repo,
   database: "boilerplate_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Configure Guardian secret key
+config :boilerplate, BoilerplateWeb.Guardian,
+  secret_key: "OSMuzr1uWJthItzsyXItnRoM3MLNaZXUwkamEHTwxUBYPPDuQTLPJnMBMiMATRjF"

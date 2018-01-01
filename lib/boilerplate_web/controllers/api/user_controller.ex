@@ -6,6 +6,17 @@ defmodule BoilerplateWeb.UserController do
 
   action_fallback BoilerplateWeb.FallbackController
 
+  def index(conn, _) do
+    users = Accounts.list_users
+    conn
+    |> render("index.json", users: users)
+  end
+
+  def show(conn, %{"username" => username}) do
+    user = Accounts.get_user_by_username(username)
+    render(conn, "show.json", user: user)
+  end
+
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       new_conn = Accounts.sign_in_user(conn, user)

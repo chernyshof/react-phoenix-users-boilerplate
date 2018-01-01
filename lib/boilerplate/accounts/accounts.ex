@@ -37,6 +37,11 @@ defmodule Boilerplate.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_by_username(username) do
+    username = String.downcase(username)
+    Repo.one!(from p in User, where: fragment("lower(?)", p.username) == ^username)
+  end
+
   @doc """
   Creates a user.
 
@@ -50,8 +55,8 @@ defmodule Boilerplate.Accounts do
 
   """
   def create_user(attrs \\ %{}, superuser \\ %{}) do
-    if !is_exist_username(attrs["username"]) do
-      if !is_exist_email(attrs["email"]) do
+    if !is_exist_username(attrs) do
+      if !is_exist_email(attrs) do
         %User{}
         |> match_superuser_registration_changeset(attrs, superuser)
         |> Repo.insert()
@@ -110,12 +115,20 @@ defmodule Boilerplate.Accounts do
     User.changeset(user, %{})
   end
 
-  defp is_exist_username(username) do
-    Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username))
+  defp is_exist_username(attrs) do
+    username = attrs["username"] || attrs[:username] 
+    if username do
+      username = String.downcase(username)
+      Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username))
+    end
   end
 
-  defp is_exist_email(email) do
-    Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+  defp is_exist_email(attrs) do
+    email = attrs["email"] || attrs[:email]
+    if email do
+      email = String.downcase(email)
+      Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+    end
   end
 
   def get_current_token(conn) do

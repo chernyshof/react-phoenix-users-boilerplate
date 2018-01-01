@@ -10,8 +10,8 @@ defmodule Boilerplate.Accounts.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :username, :string
-    field :is_staff, :boolean
-    field :is_superuser, :boolean
+    field :is_staff, :boolean, default: false
+    field :is_superuser, :boolean, default: false
     field :last_login, :naive_datetime
 
     timestamps()
