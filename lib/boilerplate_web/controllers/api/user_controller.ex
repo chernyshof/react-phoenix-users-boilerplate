@@ -18,6 +18,16 @@ defmodule BoilerplateWeb.UserController do
     end
   end
 
+  def update(conn, %{"id" => id, "user" => user_params}) do
+    user = Accounts.get_user!(id)
+    current_user = Accounts.get_current_user(conn)
+
+    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params, current_user) do
+      render(conn, "show.json", user: user)
+    end
+  end
+
+
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       new_conn = Accounts.sign_in_user(conn, user)

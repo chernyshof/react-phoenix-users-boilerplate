@@ -59,29 +59,58 @@ defmodule BoilerplateWeb.UserControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, user_path(conn, :create), @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
+    end end
+
+  describe "update user" do
+    setup [:create_user]
+
+    test "renders user when data is valid and users are the same", %{conn: conn, user: %User{id: id} = user} do
+      conn = Boilerplate.Accounts.sign_in_user(conn, user)
+      new_conn = put conn, user_path(conn, :update, user), user: @update_attrs
+      assert %{"id" => ^id} = json_response(new_conn, 200)["data"]
+
+      conn = get conn, user_path(conn, :show, id, %{"username" => @update_attrs.username})
+      assert json_response(conn, 200)["data"] == %{
+        "id" => id,
+        "name" => @update_attrs.name,
+        "username" => @update_attrs.username}
+        # "email" => @update_attrs.email,
+    end
+
+    test "renders user when data is valid and admin is changing", %{conn: conn, user: %User{id: id} = user} do
+      admin = Accounts.get_user_by_username("admin")
+      conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      new_conn = put conn, user_path(conn, :update, user), user: @update_attrs
+      assert %{"id" => ^id} = json_response(new_conn, 200)["data"]
+
+      conn = get conn, user_path(conn, :show, id, %{"username" => @update_attrs.username})
+      assert json_response(conn, 200)["data"] == %{
+        "id" => id,
+        "name" => @update_attrs.name,
+        "username" => @update_attrs.username}
+        # "email" => @update_attrs.email,
+    end
+
+    test "renders user when data is valid and users are not the same", %{conn: conn, user: %User{id: id} = user} do
+      {:ok, %User{} = user2} = Accounts.create_user(@create_attrs2)
+      conn = Boilerplate.Accounts.sign_in_user(conn, user2)
+      new_conn = put conn, user_path(conn, :update, user), user: @update_attrs
+      assert json_response(new_conn, 403)
+
+      conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
+      assert json_response(conn, 200)["data"] == %{
+        "id" => id,
+        "name" => @create_attrs.name,
+        "username" => @create_attrs.username}
+        # "email" => @update_attrs.email,
+    end
+
+    test "renders errors when data is invalid", %{conn: conn, user: user} do
+      conn = Boilerplate.Accounts.sign_in_user(conn, user)
+      conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
+      assert json_response(conn, 422)["errors"] != %{}
     end
   end
-
-  # describe "update user" do
-  #   setup [:create_user]
-
-  #   test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-  #     conn = put conn, user_path(conn, :update, user), user: @update_attrs
-  #     assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-  #     conn = get conn, user_path(conn, :show, id)
-  #     assert json_response(conn, 200)["data"] == %{
-  #       "id" => id,
-  #       "email" => "some updated email",
-  #       "password_hash" => "some updated password_hash",
-  #       "username" => "some updated username"}
-  #   end
-
-  #   test "renders errors when data is invalid", %{conn: conn, user: user} do
-  #     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
-  #     assert json_response(conn, 422)["errors"] != %{}
-  #   end
-  # end
 
   describe "delete user" do
     setup [:create_user]

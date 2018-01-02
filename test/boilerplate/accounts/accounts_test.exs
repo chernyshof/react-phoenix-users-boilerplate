@@ -63,7 +63,7 @@ defmodule Boilerplate.AccountsTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      assert {:ok, user} = Accounts.update_user(user, @update_attrs)
+      assert {:ok, user} = Accounts.update_user(user, @update_attrs, user)
       assert %User{} = user
       assert user.email == @update_attrs.email
       assert user.name == @update_attrs.name
@@ -72,8 +72,8 @@ defmodule Boilerplate.AccountsTest do
 
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
-      assert {:ok, user} = Accounts.update_user(user, @update_attrs)
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
+      assert {:ok, user} = Accounts.update_user(user, @update_attrs, user)
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs, user)
       user_u = Accounts.get_user!(user.id)
       is_the_same_users(user_u, user)
     end

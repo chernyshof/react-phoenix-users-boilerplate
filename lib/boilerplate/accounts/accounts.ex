@@ -81,10 +81,14 @@ defmodule Boilerplate.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs, superuser \\ %{}) do
-    user
-    |> match_superuser_changeset(attrs, superuser)
-    |> Repo.update()
+  def update_user(%User{} = user, attrs, current_user \\ %{}) do
+    if is_superuser_or_same_user?(user, current_user) do
+      user
+      |> match_superuser_changeset(attrs, current_user)
+      |> Repo.update()
+    else
+      {:error, :forbidden}
+    end
   end
 
   @doc """
