@@ -33,7 +33,7 @@ defmodule BoilerplateWeb.Router do
       pipe_through :unauthorized
 
       post "/sessions", SessionController, :create
-      resources "/users", UserController
+      resources "/users", UserController, only: [:create]
     end
 
     scope "/" do
@@ -41,6 +41,7 @@ defmodule BoilerplateWeb.Router do
 
       delete "/sessions", SessionController, :delete
       post "/sessions/refresh", SessionController, :refresh
+      resources "/users", UserController, except: [:create]
     end
   end
 

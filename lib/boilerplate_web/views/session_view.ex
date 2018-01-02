@@ -14,7 +14,7 @@ defmodule BoilerplateWeb.SessionView do
   def render("no_session.json", _) do
     %{errors: "invalid or expired session token"}
   end
-  
+
   def render("wrong_credentials.json", _) do
     %{errors: "Wrong email or password"}
   end

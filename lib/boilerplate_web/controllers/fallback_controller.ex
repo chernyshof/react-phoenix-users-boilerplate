@@ -17,7 +17,7 @@ defmodule BoilerplateWeb.FallbackController do
     |> put_status(:not_found)
     |> render(BoilerplateWeb.ErrorView, :"404")
   end
-  
+
   def call(conn, {:error, :wrong_credentials}) do
     conn
     |> put_status(:unprocessable_entity)
@@ -52,5 +52,17 @@ defmodule BoilerplateWeb.FallbackController do
     conn
     |> put_status(:unauthorized)
     |> render(BoilerplateWeb.SessionView, "wrong_token.json")
+  end
+
+  def call(conn, {:error, :user_not_found}) do
+    conn
+    |> put_status(:not_found)
+    |> render(BoilerplateWeb.UserView, "404.json")
+  end
+
+  def call(conn, {:error, :forbidden}) do
+    conn
+    |> put_status(:forbidden)
+    |> render(BoilerplateWeb.ErrorView, "permission_denied.json")
   end
 end

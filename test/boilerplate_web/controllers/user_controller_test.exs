@@ -6,6 +6,7 @@ defmodule BoilerplateWeb.UserControllerTest do
   alias Boilerplate.AccountsTest
 
   @create_attrs %{name: "Test Name", email: "test@test.com", password: "password", username: "username"}
+  @create_attrs2 %{name: "Test Name", email: "test2@test.com", password: "password", username: "username2"}
   @update_attrs %{name: "Updated Name", email: "test_update@test.com", password: "updated_password", username: "testusername_updated"}
   @invalid_attrs %{name: nil, email: nil, password_hash: nil, username: nil}
 
@@ -35,7 +36,8 @@ defmodule BoilerplateWeb.UserControllerTest do
   describe "index" do
     test "lists all users", %{conn: conn} do
       t = Accounts.get_user_by_username("admin")
-      admin =%{"id" => t.id, "name" => t.name, "username" => t.username}
+      admin = %{"id" => t.id, "name" => t.name, "username" => t.username}
+      conn = Boilerplate.Accounts.sign_in_user(conn, t)
       conn = get conn, user_path(conn, :index)
       assert %{"users" => users} = json_response(conn, 200)["data"]
       is_the_same_users(users, [admin])
@@ -47,7 +49,7 @@ defmodule BoilerplateWeb.UserControllerTest do
       conn = post conn, user_path(conn, :create), @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, user_path(conn, :show, id, %{"username" => "username"})
+      conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "name" => @create_attrs.name,
@@ -81,17 +83,43 @@ defmodule BoilerplateWeb.UserControllerTest do
   #   end
   # end
 
-  # describe "delete user" do
-  #   setup [:create_user]
+  describe "delete user" do
+    setup [:create_user]
 
-  #   test "deletes chosen user", %{conn: conn, user: user} do
-  #     conn = delete conn, user_path(conn, :delete, user)
-  #     assert response(conn, 204)
-  #     assert_error_sent 404, fn ->
-  #       get conn, user_path(conn, :show, user)
-  #     end
-  #   end
-  # end
+    test "deletes chosen user when users are the same", %{conn: conn, user: user} do
+      new_conn = Boilerplate.Accounts.sign_in_user(conn, user)
+      new_conn = delete new_conn, user_path(new_conn, :delete, user.id)
+      assert response(new_conn, 204)
+
+      admin = Accounts.get_user_by_username("admin")
+      conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      conn = get conn, user_path(conn, :show, user.id, %{"username" => user.username})
+      assert response(conn, 404)
+    end
+
+    test "deletes chosen user when admin is deleting", %{conn: conn, user: user} do
+      admin = Accounts.get_user_by_username("admin")
+      new_conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      new_conn = delete new_conn, user_path(new_conn, :delete, user.id)
+      assert response(new_conn, 204)
+
+      conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      conn = get conn, user_path(conn, :show, user.id, %{"username" => user.username})
+      assert response(conn, 404)
+    end
+
+    test "deletes chosen user when users are not the same", %{conn: conn, user: user} do
+      {:ok, %User{} = user2} = Accounts.create_user(@create_attrs2)
+      new_conn = Boilerplate.Accounts.sign_in_user(conn, user2)
+      new_conn = delete new_conn, user_path(new_conn, :delete, user.id)
+      assert response(new_conn, 403)
+
+      admin = Accounts.get_user_by_username("admin")
+      conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      conn = get conn, user_path(conn, :show, user.id, %{"username" => user.username})
+      assert response(conn, 200)
+    end
+  end
 
   defp create_user(_) do
     user = fixture(:user)

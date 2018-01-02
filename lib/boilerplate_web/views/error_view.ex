@@ -1,6 +1,10 @@
 defmodule BoilerplateWeb.ErrorView do
   use BoilerplateWeb, :view
 
+  def render("permission_denied", _assigns) do
+    %{errors: "Permission denied"}
+  end
+
   def render("404.html", _assigns) do
     "Page not found"
   end

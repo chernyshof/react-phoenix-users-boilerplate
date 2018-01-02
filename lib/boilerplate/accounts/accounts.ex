@@ -39,7 +39,8 @@ defmodule Boilerplate.Accounts do
 
   def get_user_by_username(username) do
     username = String.downcase(username)
-    Repo.one!(from p in User, where: fragment("lower(?)", p.username) == ^username)
+    Repo.one(from p in User, where: fragment("lower(?)", p.username) == ^username) ||
+      {:error, :user_not_found}
   end
 
   @doc """
@@ -98,8 +99,13 @@ defmodule Boilerplate.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_user(%User{} = user) do
-    Repo.delete(user)
+  # def delete_user(%User{} = user), do: delete_user(user, user)
+  def delete_user(%User{} = user, %User{} = current_user) do
+    if is_superuser_or_same_user?(user, current_user) do
+      Repo.delete(user)
+    else
+      {:error, :forbidden}
+    end
   end
 
   @doc """
@@ -179,12 +185,18 @@ defmodule Boilerplate.Accounts do
     end
   end
 
-  defp is_superuser(superuser) do
-    Map.get(superuser, :is_superuser) || superuser["is_superuser"]
+  defp is_superuser?(user) do
+    Map.get(user, :is_superuser)
+  end
+
+  def is_the_same_users?(user, current_user) do
+    id1 = Map.get(user, :id)
+    id2 = Map.get(current_user, :id)
+    id1 == id2
   end
 
   defp match_superuser_changeset(%User{} = user, attrs, superuser) do
-    if is_superuser(superuser) do
+    if is_superuser?(superuser) do
       User.superuser_changeset(user, attrs)
     else
       User.changeset(user, attrs)
@@ -192,10 +204,14 @@ defmodule Boilerplate.Accounts do
   end
 
   defp match_superuser_registration_changeset(%User{} = user, attrs, superuser) do
-    if is_superuser(superuser) do
+    if is_superuser?(superuser) do
       User.superuser_registration_changeset(user, attrs)
     else
       User.registration_changeset(user, attrs)
     end
+  end
+
+  defp is_superuser_or_same_user?(user, current_user) do
+    is_superuser?(current_user) || is_the_same_users?(user, current_user)
   end
 end

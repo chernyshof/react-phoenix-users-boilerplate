@@ -13,8 +13,9 @@ defmodule BoilerplateWeb.UserController do
   end
 
   def show(conn, %{"username" => username}) do
-    user = Accounts.get_user_by_username(username)
-    render(conn, "show.json", user: user)
+    with %User{} = user <- Accounts.get_user_by_username(username) do
+      render(conn, "show.json", user: user)
+    end
   end
 
   def create(conn, user_params) do
@@ -25,6 +26,14 @@ defmodule BoilerplateWeb.UserController do
       new_conn
       |> put_status(:created)
       |> render(BoilerplateWeb.SessionView, "show.json", user: user, jwt: jwt)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+    current_user = Accounts.get_current_user(conn)
+    with {:ok, %User{}} <- Accounts.delete_user(user, current_user) do
+      send_resp(conn, :no_content, "")
     end
   end
 end

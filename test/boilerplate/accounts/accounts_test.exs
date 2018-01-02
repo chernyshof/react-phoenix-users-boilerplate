@@ -80,7 +80,7 @@ defmodule Boilerplate.AccountsTest do
 
     test "delete_user/1 deletes the user" do
       user = user_fixture()
-      assert {:ok, %User{}} = Accounts.delete_user(user)
+      assert {:ok, %User{}} = Accounts.delete_user(user, user)
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
     end
 

@@ -29,4 +29,8 @@ defmodule BoilerplateWeb.UserView do
       name: user.name}
     # email: user.email
   end
+
+  def render("404.json", _assigns) do
+    %{errors: "User not found"}
+  end
 end
