@@ -10,8 +10,8 @@
     "lint": "eslint app",
     "lintf": "eslint app --fix",
     "test": "jest",
-    "precommit": "cross-env npm run lint && npm test",
-    "prepush": "cross-env npm run lint && npm test",
+    "precommit": "cross-env npm run lint && npm test && cd .. && mix test",
+    "prepush": "cross-env npm run lint && npm test && cd .. && mix test",
     "watch": "webpack --watch --color"
   },
   "author": "Dmitriy Chernyshov <dmitriy.chernyshof@gmail.com>",

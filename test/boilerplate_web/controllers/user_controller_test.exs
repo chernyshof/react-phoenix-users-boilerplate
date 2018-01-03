@@ -9,7 +9,7 @@ defmodule BoilerplateWeb.UserControllerTest do
   @update_attrs %{name: "Updated Name", email: "test_update@test.com", password: "updated_password", username: "testusername_updated"}
   @invalid_attrs %{name: nil, email: nil, password_hash: nil, username: nil}
 
-    defp usermap(user), do: Map.drop(user, [:last_login, :password, "last_login", "password"])
+  defp usermap(user), do: Map.drop(user, [:last_login, :password, "last_login", "password"])
 
   defp is_the_same_users([], []), do: true
   defp is_the_same_users([user|t], [user2|t2]) do
