@@ -9,7 +9,7 @@ defmodule BoilerplateWeb.UserControllerTest do
   @update_attrs %{name: "Updated Name", email: "test_update@test.com", password: "updated_password", username: "testusername_updated"}
   @invalid_attrs %{name: nil, email: nil, password_hash: nil, username: nil}
 
-    defp usermap(user), do: Map.drop(user, [:last_login, :password])
+    defp usermap(user), do: Map.drop(user, [:last_login, :password, "last_login", "password"])
 
   defp is_the_same_users([], []), do: true
   defp is_the_same_users([user|t], [user2|t2]) do
@@ -84,7 +84,8 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
-      assert json_response(conn, 200)["data"] == %{
+      assert data = json_response(conn, 200)["data"]
+      assert Map.drop(data, ["last_login"]) == %{
         "id" => id,
         "name" => @create_attrs.name,
         "username" => @create_attrs.username}
@@ -105,7 +106,8 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert %{"id" => ^id} = json_response(new_conn, 200)["data"]
 
       conn = get conn, user_path(conn, :show, id, %{"username" => @update_attrs.username})
-      assert json_response(conn, 200)["data"] == %{
+      assert data = json_response(conn, 200)["data"]
+      assert Map.drop(data, ["last_login"]) == %{
         "id" => id,
         "name" => @update_attrs.name,
         "username" => @update_attrs.username}
@@ -119,7 +121,8 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert %{"id" => ^id} = json_response(new_conn, 200)["data"]
 
       conn = get conn, user_path(conn, :show, id, %{"username" => @update_attrs.username})
-      assert json_response(conn, 200)["data"] == %{
+      assert data = json_response(conn, 200)["data"]
+      assert Map.drop(data, ["last_login"]) == %{
         "id" => id,
         "name" => @update_attrs.name,
         "username" => @update_attrs.username,
@@ -135,7 +138,8 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert json_response(new_conn, 403)
 
       conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
-      assert json_response(conn, 200)["data"] == %{
+      assert data = json_response(conn, 200)["data"]
+      assert Map.drop(data, ["last_login"]) == %{
         "id" => id,
         "name" => @create_attrs.name,
         "username" => @create_attrs.username}
@@ -148,7 +152,8 @@ defmodule BoilerplateWeb.UserControllerTest do
 
       conn = Boilerplate.Accounts.sign_in_user(conn, user)
       conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
-      assert json_response(conn, 200)["data"] == %{
+      assert data = json_response(conn, 200)["data"]
+      assert Map.drop(data, ["last_login"]) == %{
         "id" => id,
         "name" => @create_attrs.name,
         "username" => @create_attrs.username}
