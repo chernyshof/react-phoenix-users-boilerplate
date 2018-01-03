@@ -8,13 +8,15 @@ defmodule BoilerplateWeb.UserController do
 
   def index(conn, _) do
     users = Accounts.list_users
-    conn
-    |> render("index.json", users: users)
+    current_user = Accounts.get_current_user(conn)
+
+    render(conn, "index.json", users: users, current_user: current_user)
   end
 
   def show(conn, %{"username" => username}) do
     with %User{} = user <- Accounts.get_user_by_username(username) do
-      render(conn, "show.json", user: user)
+      current_user = Accounts.get_current_user(conn)
+      render(conn, "show.json", user: user, current_user: current_user)
     end
   end
 

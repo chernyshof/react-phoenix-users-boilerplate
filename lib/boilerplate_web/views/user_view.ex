@@ -2,6 +2,14 @@ defmodule BoilerplateWeb.UserView do
   use BoilerplateWeb, :view
   alias BoilerplateWeb.UserView
 
+  def render("index.json", %{users: users, current_user: %{is_staff: true}}) do
+    %{
+      data: %{
+        users: render_many(users, UserView, "user.json"),
+      }
+    }
+  end
+
   def render("index.json", %{users: users}) do
     %{
       data: %{
@@ -17,6 +25,10 @@ defmodule BoilerplateWeb.UserView do
       email: user.email,
       is_staff: user.is_staff,
       is_superuser: user.is_superuser}
+  end
+
+  def render("show.json", %{user: user, current_user: %{is_staff: true}}) do
+    %{data: render_one(user, UserView, "user.json")}
   end
 
   def render("show.json", %{user: user}) do

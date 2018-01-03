@@ -35,7 +35,14 @@ defmodule BoilerplateWeb.UserControllerTest do
   describe "index users" do
     test "lists all users", %{conn: conn} do
       t = Accounts.get_user_by_username("admin")
-      admin = %{"id" => t.id, "name" => t.name, "username" => t.username}
+      admin =
+        %{"id" => t.id,
+          "name" => t.name,
+          "username" => t.username,
+          "email" => t.email,
+          "is_staff" => t.is_staff,
+          "is_superuser" => t.is_superuser}
+
       conn = Boilerplate.Accounts.sign_in_user(conn, t)
       conn = get conn, user_path(conn, :index)
       assert %{"users" => users} = json_response(conn, 200)["data"]
@@ -51,7 +58,14 @@ defmodule BoilerplateWeb.UserControllerTest do
   describe "show user" do
     test "show user", %{conn: conn} do
       t = Accounts.get_user_by_username("admin")
-      admin = %{"id" => t.id, "name" => t.name, "username" => t.username}
+      admin =
+        %{"id" => t.id,
+          "name" => t.name,
+          "username" => t.username,
+          "email" => t.email,
+          "is_staff" => t.is_staff,
+          "is_superuser" => t.is_superuser}
+
       conn = Boilerplate.Accounts.sign_in_user(conn, t)
       conn = get conn, user_path(conn, :show, t.id, %{"username" => "admin"})
       assert user = json_response(conn, 200)["data"]
@@ -108,8 +122,10 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "name" => @update_attrs.name,
-        "username" => @update_attrs.username}
-        # "email" => @update_attrs.email,
+        "username" => @update_attrs.username,
+        "email" => @update_attrs.email,
+        "is_staff" => false,
+        "is_superuser" => false}
     end
 
     test "not renders user when data is valid and users are not the same", %{conn: conn, user: %User{id: id} = user} do
