@@ -3,7 +3,6 @@ defmodule BoilerplateWeb.UserControllerTest do
 
   alias Boilerplate.Accounts
   alias Boilerplate.Accounts.User
-  alias Boilerplate.AccountsTest
 
   @create_attrs %{name: "Test Name", email: "test@test.com", password: "password", username: "username"}
   @create_attrs2 %{name: "Test Name", email: "test2@test.com", password: "password", username: "username2"}
@@ -33,7 +32,7 @@ defmodule BoilerplateWeb.UserControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  describe "index" do
+  describe "index users" do
     test "lists all users", %{conn: conn} do
       t = Accounts.get_user_by_username("admin")
       admin = %{"id" => t.id, "name" => t.name, "username" => t.username}
@@ -41,6 +40,27 @@ defmodule BoilerplateWeb.UserControllerTest do
       conn = get conn, user_path(conn, :index)
       assert %{"users" => users} = json_response(conn, 200)["data"]
       is_the_same_users(users, [admin])
+    end
+
+    test "list should not be showed for unauthorized user", %{conn: conn} do
+      conn = get conn, user_path(conn, :index)
+      assert json_response(conn, 401)["errors"]
+    end
+  end
+
+  describe "show user" do
+    test "show user", %{conn: conn} do
+      t = Accounts.get_user_by_username("admin")
+      admin = %{"id" => t.id, "name" => t.name, "username" => t.username}
+      conn = Boilerplate.Accounts.sign_in_user(conn, t)
+      conn = get conn, user_path(conn, :show, t.id, %{"username" => "admin"})
+      assert user = json_response(conn, 200)["data"]
+      is_the_same_users(user, admin)
+    end
+
+    test "list should not be showed for unauthorized user", %{conn: conn} do
+      conn = get conn, user_path(conn, :show, 1, %{"username" => "admin"})
+      assert json_response(conn, 401)["errors"]
     end
   end
 
@@ -59,7 +79,8 @@ defmodule BoilerplateWeb.UserControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, user_path(conn, :create), @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
-    end end
+    end
+  end
 
   describe "update user" do
     setup [:create_user]
@@ -91,12 +112,25 @@ defmodule BoilerplateWeb.UserControllerTest do
         # "email" => @update_attrs.email,
     end
 
-    test "renders user when data is valid and users are not the same", %{conn: conn, user: %User{id: id} = user} do
+    test "not renders user when data is valid and users are not the same", %{conn: conn, user: %User{id: id} = user} do
       {:ok, %User{} = user2} = Accounts.create_user(@create_attrs2)
       conn = Boilerplate.Accounts.sign_in_user(conn, user2)
       new_conn = put conn, user_path(conn, :update, user), user: @update_attrs
       assert json_response(new_conn, 403)
 
+      conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
+      assert json_response(conn, 200)["data"] == %{
+        "id" => id,
+        "name" => @create_attrs.name,
+        "username" => @create_attrs.username}
+        # "email" => @update_attrs.email,
+    end
+
+    test "not renders user when data is valid and user are not authorised", %{conn: conn, user: %User{id: id} = user} do
+      new_conn = put conn, user_path(conn, :update, user), user: @update_attrs
+      assert json_response(new_conn, 401)["errors"]
+
+      conn = Boilerplate.Accounts.sign_in_user(conn, user)
       conn = get conn, user_path(conn, :show, id, %{"username" => @create_attrs.username})
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
@@ -137,11 +171,21 @@ defmodule BoilerplateWeb.UserControllerTest do
       assert response(conn, 404)
     end
 
-    test "deletes chosen user when users are not the same", %{conn: conn, user: user} do
+    test "not deletes chosen user when users are not the same", %{conn: conn, user: user} do
       {:ok, %User{} = user2} = Accounts.create_user(@create_attrs2)
       new_conn = Boilerplate.Accounts.sign_in_user(conn, user2)
       new_conn = delete new_conn, user_path(new_conn, :delete, user.id)
       assert response(new_conn, 403)
+
+      admin = Accounts.get_user_by_username("admin")
+      conn = Boilerplate.Accounts.sign_in_user(conn, admin)
+      conn = get conn, user_path(conn, :show, user.id, %{"username" => user.username})
+      assert response(conn, 200)
+    end
+
+    test "not deletes chosen user when user are not authorised", %{conn: conn, user: user} do
+      new_conn = delete conn, user_path(conn, :delete, user.id)
+      assert json_response(new_conn, 401)["errors"]
 
       admin = Accounts.get_user_by_username("admin")
       conn = Boilerplate.Accounts.sign_in_user(conn, admin)
