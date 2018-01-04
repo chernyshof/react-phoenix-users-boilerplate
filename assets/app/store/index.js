@@ -11,6 +11,7 @@ const loggerMiddleware = createLogger({
   level: 'info',
   collapsed: true,
 });
+const useReduxLogger = false;
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -23,7 +24,7 @@ export default function configureStore(browserHistory) {
 
   let middleware = [sagaMiddleware, router];
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (useReduxLogger && process.env.NODE_ENV !== 'production') {
     middleware = [...middleware, loggerMiddleware];
   }
 

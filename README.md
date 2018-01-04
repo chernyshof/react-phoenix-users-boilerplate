@@ -48,6 +48,15 @@ password: 12345678
 ```
 You probably wanna change it :)
 
+## SETUP
+#### Redux logger
+If you want to turn redux logger on just assign `true` to useReduxLogger in app/store/index.js
+```javascript
+...
+const useReduxLogger = true;
+...
+```
+
 ## DEPLOYING TO HEROKU
 [You should have installed heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
 
