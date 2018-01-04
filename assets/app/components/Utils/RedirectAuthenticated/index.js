@@ -9,7 +9,7 @@ export default class RedirectAuthenticated extends Component {
       path,
       exact,
       isAuthenticated,
-      // willAuthenticate,
+      willAuthenticate,
       component,
     } = this.props;
     const RouteComponent = component;
@@ -20,7 +20,7 @@ export default class RedirectAuthenticated extends Component {
         path={path}
         render={(props) => {
           if (isAuthenticated) { return <Redirect to={{ pathname: '/' }} />; }
-          // if (willAuthenticate) { return null; }
+          if (willAuthenticate) { return null; }
           return <RouteComponent {...props} />;
         }}
       />

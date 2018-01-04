@@ -26,6 +26,7 @@ function* callLogin({ data }) {
     setCurrentUser(result.data);
     yield put(reset('signup'));
   } else {
+    yield put({ type: sessionTypes.AUTHENTICATION_FAILURE });
     yield put({ type: errorTypes.NEW_ERROR, message: result.data.errors });
     localStorage.removeItem('token');
   }
@@ -50,6 +51,7 @@ function* callSignup({ data }) {
     yield put(reset('signup'));
     // yield put(push('/'));
   } else {
+    yield put({ type: sessionTypes.AUTHENTICATION_FAILURE });
     yield put({ type: errorTypes.NEW_ERROR, message: result.data.errors });
     localStorage.removeItem('token');
     // yield put(push('/login'));
@@ -89,6 +91,7 @@ function* callAuthenticate() {
     yield put({ type: sessionTypes.AUTHENTICATION_SUCCESS, response: result.data });
     setCurrentUser(result.data);
   } else {
+    yield put({ type: sessionTypes.AUTHENTICATION_FAILURE });
     yield put({ type: errorTypes.NEW_ERROR, message: result.data.errors });
     localStorage.removeItem('token');
     window.location = '/login';
