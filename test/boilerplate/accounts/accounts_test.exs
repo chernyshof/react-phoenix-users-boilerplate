@@ -8,6 +8,8 @@ defmodule Boilerplate.AccountsTest do
     @valid_attrs %{name: "Test Name", email: "test@test.com", password: "password", username: "username"}
     @update_attrs %{name: "Updated Name", email: "test_update@test.com", password: "updated_password", username: "testusername_updated"}
     @invalid_attrs %{name: nil, email: nil, password_hash: nil, username: nil}
+    @valid_attrs2 %{name: "Test Name", email: "test2@test.com", password: "password", username: "UsErNaMe"}
+    @valid_attrs3 %{name: "Test Name", email: "TeSt@TeSt.com", password: "password", username: "username2"}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -31,8 +33,7 @@ defmodule Boilerplate.AccountsTest do
     defp is_the_same_users(user, user2) do
       is_the_same_users([user], [user2])
     end
-
-    test "list_users/0 returns all users" do
+test "list_users/0 returns all users" do
       user = user_fixture()
       admin = Accounts.get_user_by_username("admin")
       is_the_same_users(Accounts.list_users(), [admin, user])
@@ -41,6 +42,12 @@ defmodule Boilerplate.AccountsTest do
     test "get_user_by_username/1 returns the user with given username" do
       user = user_fixture()
       user2 = Accounts.get_user_by_username(user.username)
+      is_the_same_users(user, user2)
+    end
+
+    test "get_user_by_username/1 returns the user with given username but different case" do
+      user = user_fixture()
+      user2 = Accounts.get_user_by_username("UsErNaMe")
       is_the_same_users(user, user2)
     end
 
@@ -57,6 +64,24 @@ defmodule Boilerplate.AccountsTest do
       assert user.username == @valid_attrs.username
     end
 
+    test "create_user/1 with valid data and username has already been taken returns error changeset" do
+      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
+      assert user.name == @valid_attrs.name
+      assert user.email == @valid_attrs.email
+      assert user.username == @valid_attrs.username
+
+      assert {:error, :already_taken_username} = Accounts.create_user(@valid_attrs2)
+    end
+
+    test "create_user/1 with valid data and email has already been taken returns error changeset" do
+      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
+      assert user.name == @valid_attrs.name
+      assert user.email == @valid_attrs.email
+      assert user.username == @valid_attrs.username
+
+      assert {:error, :already_taken_email} = Accounts.create_user(@valid_attrs3)
+    end
+
     test "create_user/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
     end
@@ -68,6 +93,23 @@ defmodule Boilerplate.AccountsTest do
       assert user.email == @update_attrs.email
       assert user.name == @update_attrs.name
       assert user.username == @update_attrs.username
+    end
+
+    test "update_user/2 not updates current_user rights if user is not admin" do
+      user = user_fixture()
+      assert {:ok, user} = Accounts.update_user(user, %{is_staff: true, is_superuser: true}, user)
+      assert %User{} = user
+      assert user.is_staff == false
+      assert user.is_superuser == false
+    end
+
+    test "update_user/2 updates current_user rights if user is admin" do
+      user = user_fixture()
+      admin = Accounts.get_user_by_username("admin")
+      assert {:ok, user} = Accounts.update_user(user, %{is_staff: true, is_superuser: true}, admin)
+      assert %User{} = user
+      assert user.is_staff == true
+      assert user.is_superuser == true
     end
 
     test "update_user/2 with invalid data returns error changeset" do
