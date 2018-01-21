@@ -5,7 +5,7 @@ defmodule BoilerplateWeb.UserView do
   def render("index.json", %{users: users, current_user: %{is_staff: true}}) do
     %{
       data: %{
-        users: render_many(users, UserView, "user.json"),
+        users: render_many(users, UserView, "user.json")
       }
     }
   end
@@ -13,7 +13,7 @@ defmodule BoilerplateWeb.UserView do
   def render("index.json", %{users: users}) do
     %{
       data: %{
-        users: render_many(users, UserView, "show_user.json"),
+        users: render_many(users, UserView, "show_user.json")
       }
     }
   end
@@ -27,21 +27,19 @@ defmodule BoilerplateWeb.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id,
+    %{
+      id: user.id,
       username: user.username,
       name: user.name,
       email: user.email,
       last_login: user.last_login,
       is_staff: user.is_staff,
-      is_superuser: user.is_superuser}
+      is_superuser: user.is_superuser
+    }
   end
 
-
   def render("show_user.json", %{user: user}) do
-    %{id: user.id,
-      username: user.username,
-      name: user.name,
-      last_login: user.last_login}
+    %{id: user.id, username: user.username, name: user.name, last_login: user.last_login}
     # email: user.email
   end
 

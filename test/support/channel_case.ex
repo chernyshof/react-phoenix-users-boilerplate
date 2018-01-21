@@ -25,13 +25,13 @@ defmodule BoilerplateWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Boilerplate.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Boilerplate.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

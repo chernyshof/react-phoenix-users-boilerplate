@@ -3,16 +3,15 @@ defmodule Boilerplate.Accounts.User do
   import Ecto.Changeset
   alias Boilerplate.Accounts.User
 
-
   schema "users" do
-    field :name, :string
-    field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
-    field :username, :string
-    field :is_staff, :boolean, default: false
-    field :is_superuser, :boolean, default: false
-    field :last_login, :naive_datetime
+    field(:name, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    field(:username, :string)
+    field(:is_staff, :boolean, default: false)
+    field(:is_superuser, :boolean, default: false)
+    field(:last_login, :naive_datetime)
 
     timestamps()
   end
@@ -65,6 +64,7 @@ defmodule Boilerplate.Accounts.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
+
       _ ->
         changeset
     end

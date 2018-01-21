@@ -17,6 +17,6 @@ defmodule BoilerplateWeb.Guardian do
     # the resource id so here we'll rely on that to look it up.
     id = claims["sub"]
     resource = Boilerplate.Accounts.get_user!(id)
-    {:ok,  resource}
+    {:ok, resource}
   end
 end

@@ -11,7 +11,7 @@ defmodule Boilerplate.Application do
       # Start the Ecto repository
       supervisor(Boilerplate.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(BoilerplateWeb.Endpoint, []),
+      supervisor(BoilerplateWeb.Endpoint, [])
       # Start your own worker by calling: Boilerplate.Worker.start_link(arg1, arg2, arg3)
       # worker(Boilerplate.Worker, [arg1, arg2, arg3]),
     ]

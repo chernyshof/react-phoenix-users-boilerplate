@@ -39,7 +39,8 @@ defmodule Boilerplate.Accounts do
 
   def get_user_by_username(username) do
     username = String.downcase(username)
-    Repo.one(from p in User, where: fragment("lower(?)", p.username) == ^username) ||
+
+    Repo.one(from(p in User, where: fragment("lower(?)", p.username) == ^username)) ||
       {:error, :user_not_found}
   end
 
@@ -126,18 +127,29 @@ defmodule Boilerplate.Accounts do
   end
 
   defp is_exist_username(attrs) do
-    username = attrs["username"] || attrs[:username] 
+    username = attrs["username"] || attrs[:username]
+
     if username do
       username = String.downcase(username)
-      Repo.one(from p in User, where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username))
+
+      Repo.one(
+        from(
+          p in User,
+          where: fragment("lower(?)", p.username) == fragment("lower(?)", ^username)
+        )
+      )
     end
   end
 
   defp is_exist_email(attrs) do
     email = attrs["email"] || attrs[:email]
+
     if email do
       email = String.downcase(email)
-      Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+
+      Repo.one(
+        from(p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+      )
     end
   end
 
@@ -166,7 +178,10 @@ defmodule Boilerplate.Accounts do
   end
 
   def authenticate(%{"email" => email, "password" => password}) do
-    user = Repo.one(from p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+    user =
+      Repo.one(
+        from(p in User, where: fragment("lower(?)", p.email) == fragment("lower(?)", ^email))
+      )
 
     case check_password(user, password) do
       true -> {:ok, user}

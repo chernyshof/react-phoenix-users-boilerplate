@@ -4,12 +4,33 @@ defmodule Boilerplate.AccountsTest do
   alias Boilerplate.Accounts
 
   describe "users" do
-    alias Boilerplate.Accounts.User 
-    @valid_attrs %{name: "Test Name", email: "test@test.com", password: "password", username: "username"}
-    @update_attrs %{name: "Updated Name", email: "test_update@test.com", password: "updated_password", username: "testusername_updated"}
+    alias Boilerplate.Accounts.User
+
+    @valid_attrs %{
+      name: "Test Name",
+      email: "test@test.com",
+      password: "password",
+      username: "username"
+    }
+    @update_attrs %{
+      name: "Updated Name",
+      email: "test_update@test.com",
+      password: "updated_password",
+      username: "testusername_updated"
+    }
     @invalid_attrs %{name: nil, email: nil, password_hash: nil, username: nil}
-    @valid_attrs2 %{name: "Test Name", email: "test2@test.com", password: "password", username: "UsErNaMe"}
-    @valid_attrs3 %{name: "Test Name", email: "TeSt@TeSt.com", password: "password", username: "username2"}
+    @valid_attrs2 %{
+      name: "Test Name",
+      email: "test2@test.com",
+      password: "password",
+      username: "UsErNaMe"
+    }
+    @valid_attrs3 %{
+      name: "Test Name",
+      email: "TeSt@TeSt.com",
+      password: "password",
+      username: "username2"
+    }
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -23,17 +44,20 @@ defmodule Boilerplate.AccountsTest do
     defp usermap(user), do: Map.drop(user, [:last_login, :password])
 
     defp is_the_same_users([], []), do: true
-    defp is_the_same_users([user|t], [user2|t2]) do
+
+    defp is_the_same_users([user | t], [user2 | t2]) do
       user = usermap(user)
       user2 = usermap(user2)
       # assert
       assert user == user2
       is_the_same_users(t, t2)
     end
+
     defp is_the_same_users(user, user2) do
       is_the_same_users([user], [user2])
     end
-test "list_users/0 returns all users" do
+
+    test "list_users/0 returns all users" do
       user = user_fixture()
       admin = Accounts.get_user_by_username("admin")
       is_the_same_users(Accounts.list_users(), [admin, user])
@@ -106,7 +130,10 @@ test "list_users/0 returns all users" do
     test "update_user/2 updates current_user rights if user is admin" do
       user = user_fixture()
       admin = Accounts.get_user_by_username("admin")
-      assert {:ok, user} = Accounts.update_user(user, %{is_staff: true, is_superuser: true}, admin)
+
+      assert {:ok, user} =
+               Accounts.update_user(user, %{is_staff: true, is_superuser: true}, admin)
+
       assert %User{} = user
       assert user.is_staff == true
       assert user.is_superuser == true

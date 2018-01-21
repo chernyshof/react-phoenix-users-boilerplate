@@ -3,8 +3,7 @@ defmodule BoilerplateWeb.SessionView do
   alias BoilerplateWeb.SessionView
 
   def render("show.json", %{user: user, jwt: jwt}) do
-    %{data: render_one(user, BoilerplateWeb.UserView, "user.json"),
-      meta: %{token: jwt}}
+    %{data: render_one(user, BoilerplateWeb.UserView, "user.json"), meta: %{token: jwt}}
   end
 
   def render("delete.json", _) do

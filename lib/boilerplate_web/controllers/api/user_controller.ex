@@ -4,10 +4,10 @@ defmodule BoilerplateWeb.UserController do
   alias Boilerplate.Accounts
   alias Boilerplate.Accounts.User
 
-  action_fallback BoilerplateWeb.FallbackController
+  action_fallback(BoilerplateWeb.FallbackController)
 
   def index(conn, _) do
-    users = Accounts.list_users
+    users = Accounts.list_users()
     current_user = Accounts.get_current_user(conn)
 
     render(conn, "index.json", users: users, current_user: current_user)
@@ -29,7 +29,6 @@ defmodule BoilerplateWeb.UserController do
     end
   end
 
-
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       new_conn = Accounts.sign_in_user(conn, user)
@@ -44,6 +43,7 @@ defmodule BoilerplateWeb.UserController do
   def delete(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     current_user = Accounts.get_current_user(conn)
+
     with {:ok, %User{}} <- Accounts.delete_user(user, current_user) do
       send_resp(conn, :no_content, "")
     end
