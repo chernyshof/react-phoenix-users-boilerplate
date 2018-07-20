@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
-import { browserHistory } from 'react-router';
 
 import configureStore, { sagaMiddleware } from 'store';
 import Root from 'config/Root';
@@ -13,11 +12,10 @@ import Sagas from 'sagas';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
-const store = configureStore(browserHistory);
+const history = createHistory();
+const store = configureStore(history);
 
 sagaMiddleware.run(Sagas);
-
-const history = createHistory();
 
 
 const render = (Component) => {
