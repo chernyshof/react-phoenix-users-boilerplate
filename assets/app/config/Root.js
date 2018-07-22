@@ -13,7 +13,8 @@ import {
   Signup,
   Login,
   MatchAuthenticated,
-  RedirectAuthenticated } from 'components';
+  RedirectAuthenticated,
+} from 'components';
 
 
 class Root extends Component {
