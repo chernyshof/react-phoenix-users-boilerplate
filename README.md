@@ -1,6 +1,6 @@
 # React + Phoenix boilerplate
 
-This is a basic setup for an React(16) + Phoenix(1.3)/Elixir(1.5) project, using webpack(3) and users with authentication.
+This is a basic setup for an React(16) + Phoenix(1.3)/Elixir(1.7) project, using webpack(4) and users with authentication.
 
 ## STARTING PROJECT
 #### [You should have git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -129,7 +129,7 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 * [Redux logger](https://github.com/evgenyrodionov/redux-logger)
 * [React Router 4](https://github.com/ReactTraining/react-router) Declarative routing for React.
 * [Babel](http://babeljs.io) For ES6 and ES7 magic.
-* [Webpack 3](http://webpack.github.io) For bundling.
+* [Webpack 4](http://webpack.github.io) For bundling.
 * [Webpack Dev Middleware](http://webpack.github.io/docs/webpack-dev-middleware.html)
 * [Redux](https://github.com/reactjs/redux) Predictable state container for JavaScript apps.
 * [Redux Dev Tools](https://github.com/gaearon/redux-devtools) DevTools for Redux with hot reloading, action replay, and customizable UI. Watch [Dan Abramov's talk](https://www.youtube.com/watch?v=xsSnOQynTHs)
@@ -145,6 +145,6 @@ heroku run "POOL_SIZE=2 mix ecto.migrate"
 and other stuff...
 
 **Backend**
-* [Elixir 1.5](http://elixir-lang.org/)
+* [Elixir 1.7](http://elixir-lang.org/)
 * [Phoenix 1.3](http://www.phoenixframework.org/)
 * [Credo](https://github.com/rrrene/credo) Static code analysis tool for the Elixir language.
