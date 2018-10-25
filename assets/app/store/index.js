@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import '@babel/polyfill';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -18,8 +18,7 @@ export const sagaMiddleware = createSagaMiddleware();
 /* eslint-disable no-underscore-dangle */
 export default function configureStore(browserHistory) {
   const router = routerMiddleware(browserHistory);
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   // const reduxRouterMiddleware = syncHistoryWithStore(browserHistory);
 
   let middleware = [sagaMiddleware, router];
@@ -28,8 +27,7 @@ export default function configureStore(browserHistory) {
     middleware = [...middleware, loggerMiddleware];
   }
 
-  const createStoreWithMiddleware =
-    composeEnhancers(applyMiddleware(...middleware))(createStore);
+  const createStoreWithMiddleware = composeEnhancers(applyMiddleware(...middleware))(createStore);
 
   return createStoreWithMiddleware(reducers);
 }

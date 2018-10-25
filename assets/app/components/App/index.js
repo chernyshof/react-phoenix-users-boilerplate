@@ -20,14 +20,16 @@ export class App extends Component {
                 <ul className="nav nav-pills pull-right">
                   <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
 
-                  <button className="btn btn-sm" onClick={this.props.logout}>Logout</button>
+                  <button type="button" className="btn btn-sm" onClick={this.props.logout}>Logout</button>
                 </ul>
               </nav>
             </header>
 
             <main role="main">
               <div className="jumbotron">
-                <h2 id="heading">Hello, <span className="username">{ username }</span>!</h2>
+                <h2 id="heading">
+                  Hello, <span className="username">{ username }</span>!
+                </h2>
                 <h2>Welcome to Phoenix</h2>
                 <p className="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
               </div>

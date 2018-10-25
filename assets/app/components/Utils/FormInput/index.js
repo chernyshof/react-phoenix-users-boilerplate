@@ -18,8 +18,9 @@ export default class Input extends Component {
           placeholder={placeholder}
           className="form-control"
         />
-        {meta.touched && meta.error &&
-          <div className="validation-error">{meta.error}</div>
+        {meta.touched
+            && meta.error
+            && <div className="validation-error">{meta.error}</div>
         }
       </div>
     );

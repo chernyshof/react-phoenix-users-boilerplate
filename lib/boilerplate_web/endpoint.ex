@@ -23,7 +23,6 @@ defmodule BoilerplateWeb.Endpoint do
     plug(Phoenix.CodeReloader)
   end
 
-  plug(Plug.RequestId)
   plug(Plug.Logger)
 
   plug(
@@ -33,8 +32,8 @@ defmodule BoilerplateWeb.Endpoint do
     json_decoder: Poison
   )
 
-  plug(Plug.MethodOverride)
-  plug(Plug.Head)
+  plug Plug.MethodOverride
+  plug Plug.Head
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -46,7 +45,7 @@ defmodule BoilerplateWeb.Endpoint do
     signing_salt: "7ptxdQY6"
   )
 
-  plug(BoilerplateWeb.Router)
+  plug BoilerplateWeb.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

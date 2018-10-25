@@ -5,7 +5,9 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
+
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
@@ -56,6 +58,8 @@ const config = {
 
   context: resolve(__dirname, 'app'),
 
+  mode: 'development',
+
   devServer: {
     host: 'localhost',
     port: 3000,
@@ -90,10 +94,17 @@ const config = {
       },
       {
         test: /\.scss$/, // files ending with .scss
-        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-        })),
+        use: [
+          // MiniCssExtractPlugin.loader,
+          ExtractCssChunks.loader,
+          'css-hot-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+        // use: ['css-hot-loader'].concat(MiniCssExtractPlugin.extract({
+        //   fallback: 'style-loader',
+        //   use: ['css-loader', 'sass-loader'],
+        // })),
       },
       { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg)$/, use: 'url-loader?limit=15000' },
@@ -124,7 +135,18 @@ const config = {
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
     new OpenBrowserPlugin({ url: 'http://localhost:4000' }),
 
-    new ExtractTextPlugin({ filename: './css/style.css', disable: false, allChunks: true }),
+    new ExtractCssChunks(
+        {
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: "./css/style.css",
+          hot: true, // if you want HMR - we try to automatically inject hot reloading but if it's not working, add it to the config
+          orderWarning: true, // Disable to remove warnings about conflicting order between imports
+          reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
+          cssModules: true // if you use cssModules, this can help.
+        }),
+    // new MiniCssExtractPlugin({ filename: 'css/style.css', hot: true}),
+    // new ExtractTextPlugin({ filename: './css/style.css', disable: false, allChunks: true }),
   ],
 };
 

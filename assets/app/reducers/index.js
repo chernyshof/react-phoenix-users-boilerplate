@@ -19,4 +19,3 @@ export default function (state, action) {
   }
   return appReducer(state, action);
 }
-
