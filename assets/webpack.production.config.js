@@ -2,7 +2,8 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   devtool: 'cheap-module-source-map',
@@ -56,8 +57,8 @@ const config = {
       comments: false,
     }),
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-    new MiniCssExtractPlugin({ filename: 'css/style.css'}),
-    // new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
+    // new MiniCssExtractPlugin({ filename: 'css/style.css'}),
+    new ExtractTextPlugin({ filename: 'css/style.css', disable: false, allChunks: true }),
     new CopyWebpackPlugin([{ from: './vendors', to: 'vendors' }]),
   ],
 
@@ -71,12 +72,21 @@ const config = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-hot-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            { loader: 'sass-loader', query: { sourceMap: false } },
+          ],
+        }),
+
+        // use: [
+        //   MiniCssExtractPlugin.loader,
+        //   'css-hot-loader',
+        //   'css-loader',
+        //   'sass-loader',
+        // ],
+
         // use: MiniCssExtractPlugin.extract({
         //   fallback: 'style-loader',
         //   use: [
