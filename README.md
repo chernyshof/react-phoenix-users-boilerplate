@@ -1,5 +1,7 @@
 # React + Phoenix boilerplate
 
+Demo: http://phxboilerplate.herokuapp.com
+
 This is a basic setup for an React(16) + Phoenix(1.3)/Elixir(1.7) project, using webpack(4) and users with authentication.
 
 ## STARTING PROJECT
