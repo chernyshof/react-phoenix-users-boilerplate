@@ -80,7 +80,7 @@ const config = {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        user: [{
+        use: [{
           loader: 'babel-loader',
         }]
       },
