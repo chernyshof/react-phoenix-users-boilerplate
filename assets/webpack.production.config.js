@@ -34,6 +34,29 @@ const config = {
     publicPath: '/',
   },
 
+  optimization: {
+    minimizer: [
+
+      new webpack.optimize.UglifyJsPlugin({
+        uglifyOptions: {
+          // beautify: false,
+          // mangle: {
+          //   screw_ie8: true,
+          //   keep_fnames: true,
+          // },
+          compress: {
+            booleans: true,
+            screw_ie8: true,
+          },
+          output: {
+            comments: false,
+          },
+          minify: {},
+        }
+      }),
+    ]
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: `${__dirname}/app/index.html`,
@@ -44,17 +67,6 @@ const config = {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true,
-      },
-      compress: {
-        screw_ie8: true,
-      },
-      comments: false,
     }),
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
     // new MiniCssExtractPlugin({ filename: 'css/style.css'}),
