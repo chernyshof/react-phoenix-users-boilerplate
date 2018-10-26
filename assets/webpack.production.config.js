@@ -47,7 +47,7 @@ const config = {
           // },
           compress: {
             booleans: true,
-            screw_ie8: true,
+            // screw_ie8: true,
           },
           output: {
             comments: false,
