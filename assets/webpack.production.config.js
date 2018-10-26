@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const config = {
   devtool: 'cheap-module-source-map',
@@ -37,7 +38,7 @@ const config = {
   optimization: {
     minimizer: [
 
-      new webpack.optimize.UglifyJsPlugin({
+      new UglifyJsPlugin({
         uglifyOptions: {
           // beautify: false,
           // mangle: {

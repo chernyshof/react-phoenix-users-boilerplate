@@ -7,7 +7,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 const config = {
