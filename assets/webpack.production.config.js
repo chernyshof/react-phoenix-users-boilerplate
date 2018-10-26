@@ -76,11 +76,13 @@ const config = {
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        user: [{
+          loader: 'babel-loader',
+        }]
       },
       {
         test: /\.scss$/,
