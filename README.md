@@ -45,7 +45,7 @@ mix phx.server
 ## SUPERUSER
 After running `mix ecto.migrate` command you will have superuser:
 ```
-username: amdin
+email: admin@admin.com
 password: 12345678
 ```
 You probably wanna change it :)
